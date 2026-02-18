@@ -1,0 +1,474 @@
+/* ==================== Contenedor exclusivo para el menú ==================== */
+body {
+  font-size: 19px;
+  font-family: Arial, sans-serif;
+  background-color: #fcfaf8;
+  margin: 0;
+  padding: 0;
+}
+
+#pedidoForm {
+  max-width: 550px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  overflow-x: hidden; /* evita scroll horizontal */
+}
+
+/* ==================== Títulos ==================== */
+h1 {
+    font-size: 24px;
+    border: 3px solid #ff9900;
+    padding: 10px 20px;
+    border-radius: 11px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+h2 { 
+    font-size: 24px;
+    font-weight: 700 !important;
+}
+
+#pedidoForm h1,
+.menu-section h2,
+.categoria h2 {
+  text-align: center;
+  font-weight: normal;
+  color: #0f0f0f;
+  margin-bottom: 0px;
+}
+
+/* ==================== Items del menú ==================== */
+.item {
+  display: flex;
+  flex-direction: column; /* columna principal */
+  padding: 8px 5px;
+  border-bottom: 1px solid #eee;
+  gap: 4px;
+}
+
+/* Línea principal: checkbox + nombre + precio + cantidad */
+.item label,
+.item span,
+.item input[type="number"] {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.item label {
+  font-weight: normal;
+  flex: 1 1 auto;
+}
+
+.item span {
+  color: #e67e22;
+  margin: 0 8px;
+  white-space: nowrap;
+}
+
+.item input[type="number"] {
+  width: 60px;
+  padding: 4px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Contenedor flex para mantener todo en una línea */
+.item > label,
+.item > span,
+.item > input[type="number"] {
+  flex-shrink: 0;
+}
+
+.item > label {
+  margin-right: 5px;
+}
+
+/* ==================== Descripciones ==================== */
+.descripcion {
+  width: 100%;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 4px;
+  clear: both; /* asegura que quede debajo de la línea principal */
+}
+
+/* ==================== Botón ==================== */
+.btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #e67e22;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background-color: #d35400;
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 600px) {
+  #pedidoForm {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .item {
+    gap: 6px;
+  }
+
+  .item label,
+  .item span,
+  .item input[type="number"] {
+    flex-shrink: 0;
+  }
+
+  .item input[type="number"] {
+    width: 50px;
+  }
+
+  .descripcion {
+    margin-top: 4px;
+  }
+}
+.item-linea {
+  display: flex;
+  justify-content: space-between; /* Distribuye los tres bloques */
+  align-items: center;            /* Centra verticalmente */
+  gap: 1rem;                      /* Espacio entre elementos si hace falta */
+  margin-bottom: 0.5rem;          /* Espacio debajo de la línea */
+}
+
+.item-linea label {
+  display: flex;
+  align-items: center;            /* Centra checkbox y nombre verticalmente */
+  gap: 0.5rem;                    /* Espacio entre checkbox y nombre */
+  flex: 1;                        /* Ocupa todo el espacio disponible a la izquierda */
+}
+
+.item-linea span {
+  flex: 0;                        /* No se estira, se centra en el medio */
+  text-align: center;
+  width: 80px;                    /* Ajusta según necesites para centrar el precio */
+}
+
+.item-linea input.cantidad {
+  flex: 0;                        /* No se estira, se pega a la derecha */
+  width: 60px;                     /* Ajusta ancho del input según gustes */
+  text-align: center;              /* Centra el número dentro del input */
+}
+
+/* Formulario */
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgb(167, 127, 127);
+  resize: vertical;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    padding: 15px;
+    margin: 10px;
+  }
+}
+
+.gracias { 
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.gracias h1 {
+  color: 2e7d32;
+  margin-bottom: 15px;
+}
+
+.gracias p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.portada-gracias { 
+  height: 300px;
+  max-height: 300px;
+}
+
+@media (min-width: 1024px) { 
+  .portada-gracias {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .item {
+    font-size: 14px;
+  }
+}
+
+#tipoEntrega,
+#tipoPago {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;  /* mismo borde */
+  border-radius: 8px;       /* bordes redondeados */
+  background-color: #fff;   /* fondo blanco */
+  appearance: none;          /* quita flecha por defecto en algunos navegadores */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+/* Cuando el select está enfocado */
+#tipoEntrega:focus,
+#tipoPago:focus {
+  border-color: #007bff;  /* azul intenso al seleccionar */
+  outline: none;
+}
+
+#direccion { 
+  width: 80%;
+  padding: 12px 15px;
+  font-size: 15px;
+  border-radius: 17px;
+  box-sizing: border-box;
+}
+
+#efectivoCliente { 
+  width: 40%;
+  padding: 12px 15px;
+  font-size: 15px;
+  border-radius: 17px;
+  box-sizing: border-box;
+}
+
+#efectivoField small { 
+  font-weight: bold;
+  font-size: 15px;
+  color: red;
+  margin-top: 6px;
+  display: block;
+}
+
+#confirmPedido {
+  margin-right: 8px;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  gap: 5px;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  background-image: url("logo.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.15;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.form-container {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  body::before {
+    width: 250px;
+    height: 250px;
+    opacity: 0.1;
+  }
+}
+
+.titulo-seccion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    width: 100%;
+    padding: 18px;
+
+    font-size: 22px;
+    font-weight: 400 !important;
+
+    background: #faf7f7;
+    border-radius: 14px;
+    cursor: pointer;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.flecha {
+    color: rgba(204, 135, 6, 0.918);
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+.check-toggle:checked + .titulo-seccion .flecha {
+    transform: rotate(180deg);
+}
+
+.check-toggle {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.portada {
+    width: 100%;
+    height: 130px;      /* Altura ideal móvil */
+    overflow: hidden;
+    border-radius: 18px;
+}
+
+.portada img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; 
+}
+
+@media (min-width: 768px) {
+    #pedidoForm {
+        margin: 40px auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .portada { 
+        height: 180px;
+    }
+}
+
+.gracias-container {
+    max-width: 550px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.gracias h1 { 
+    border: none;
+}
+
+.gracias-container {
+  max-width: 550px;
+  width: 95%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+}
+
+/* ==================== Opciones de Bebidas ==================== */
+
+.opciones-bebida {
+  margin-top: 6px;
+  padding: 10px;
+  background-color: #fff7ed;
+  border-radius: 10px;
+  border: 1px solid #f5d2b3;
+}
+
+.opciones-bebida select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1.5px solid #e67e22;
+  background-color: #ffffff;
+  color: #333;
+  margin-top: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.opciones-bebida select:focus {
+  border-color: #d35400;
+  box-shadow: 0 0 4px rgba(230, 126, 34, 0.4);
+  outline: none;
+}
+
+.contenedor-sabor {
+  margin-top: 8px;
+}
+
+/* ==================== BLOQUES DE SABORES ==================== */
+
+#saboresPet400,
+#opcionesHit,
+#saboresLitro,
+#saboresLimonada,
+#tipoCafeLicor {
+  margin-top: 8px;
+  padding: 10px;
+  background-color: #fff7ed;
+  border-radius: 10px;
+  border: 1px solid #f5d2b3;
+}
+
+/* Todos los selects dentro de esos bloques */
+#saboresPet400 select,
+#opcionesHit select,
+#saboresLitro select,
+#saboresLimonada select,
+#tipoCafeLicor select {
+  width: 50%;
+  padding: 9px 10px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1.5px solid #e67e22;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Un solo focus para todos */
+#saboresPet400 select:focus,
+#opcionesHit select:focus,
+#saboresLitro select:focus,
+#saboresLimonada select:focus,
+#tipoCafeLicor select:focus {
+  border-color: #d35400;
+  box-shadow: 0 0 5px rgba(230, 126, 34, 0.35);
+  outline: none;
+}
