@@ -1571,24 +1571,200 @@ onchange="toggleCantidad(this)"> Soda Saborizada</label>
 <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
 </div></div>
 
-<!-- Jugo -->
-<div class="item"><div class="item-linea">
-<label><input type="checkbox" class="check-plato"
-name="JugoAgua" value="4900"
-data-nombre="Jugo en Agua" data-precio="4900"
-onchange="toggleCantidad(this)"> Jugo en Agua</label>
-<span class="precio">$4.900</span>
-<input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
-</div></div>
+<!-- JUGOS EN AGUA -->
+<div class="item item-subseccion">
+  <div class="item-linea">
+    <input type="checkbox"
+      id="checkJugosAgua"
+      class="check-toggle"
+      onchange="toggleSeccion('jugosAgua')">
+    <label for="checkJugosAgua" class="titulo-seccion subtitulo">
+      🧃 Jugos en Agua
+      <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
 
-<div class="item"><div class="item-linea">
-<label><input type="checkbox" class="check-plato"
-name="JugoLeche" value="5900"
-data-nombre="Jugo en Leche" data-precio="5900"
-onchange="toggleCantidad(this)"> Jugo en Leche</label>
-<span class="precio">$5.900</span>
-<input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
-</div></div>
+<div id="jugosAgua" style="display: none;">
+
+  <!-- Mango -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="MangoAgua" value="4900"
+      data-nombre="Jugo en Agua - Mango" data-precio="4900"
+      onchange="toggleCantidad(this)">Mango en agua</label>
+    <span class="precio">$4.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Maracuyá -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="MaracuyaAgua" value="4900"
+      data-nombre="Jugo en Agua - Maracuyá" data-precio="4900"
+      onchange="toggleCantidad(this)">Maracuyá en agua</label>
+    <span class="precio">$4.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Fresa -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="FresaAgua" value="4900"
+      data-nombre="Jugo en Agua - Fresa" data-precio="4900"
+      onchange="toggleCantidad(this)">Fresa en agua</label>
+    <span class="precio">$4.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Lulo -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="LuloAgua" value="4900"
+      data-nombre="Jugo en Agua - Lulo" data-precio="4900"
+      onchange="toggleCantidad(this)">Lulo en agua</label>
+    <span class="precio">$4.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Mora -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="MoraAgua" value="4900"
+      data-nombre="Jugo en Agua - Mora" data-precio="4900"
+      onchange="toggleCantidad(this)">Mora en agua</label>
+    <span class="precio">$4.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Guanábana -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="GuanabanaAgua" value="4900"
+      data-nombre="Jugo en Agua - Guanábana" data-precio="4900"
+      onchange="toggleCantidad(this)">Guanábana en agua</label>
+    <span class="precio">$4.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Piña -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="PinaAgua" value="4900"
+      data-nombre="Jugo en Agua - Piña" data-precio="4900"
+      onchange="toggleCantidad(this)">Piña en agua</label>
+    <span class="precio">$4.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Mandarina -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="MandarinaAgua" value="4900"
+      data-nombre="Jugo en Agua - Mandarina" data-precio="4900"
+      onchange="toggleCantidad(this)">Mandarina en agua</label>
+    <span class="precio">$4.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+  </div>
+
+ <!-- JUGOS EN LECHE -->
+<div class="item item-subseccion">
+  <div class="item-linea">
+    <input type="checkbox"
+      id="checkJugosLeche"
+      class="check-toggle"
+      onchange="toggleSeccion('jugosLeche')">
+    <label for="checkJugosLeche" class="titulo-seccion item-subseccion">
+      🥛 Jugos en Leche
+      <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+
+<div id="jugosLeche" style="display: none;">
+
+  <!-- Mango -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="MangoLeche" value="5900"
+      data-nombre="Jugo en leche - Mango" data-precio="5900"
+      onchange="toggleCantidad(this)"> Mango en leche</label>
+    <span class="precio">$5.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Maracuyá -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="MaracuyaLeche" value="5900"
+      data-nombre="Jugo en leche - Maracuyá" data-precio="5900"
+      onchange="toggleCantidad(this)"> Maracuyá en leche</label>
+    <span class="precio">$5.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Fresa -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="FresaLeche" value="5900"
+      data-nombre="Jugo en leche - Fresa" data-precio="5900"
+      onchange="toggleCantidad(this)"> Fresa en leche</label>
+    <span class="precio">$5.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Lulo -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="LuloLeche" value="5900"
+      data-nombre="Jugo en leche - Lulo" data-precio="5900"
+      onchange="toggleCantidad(this)"> Lulo en leche</label>
+    <span class="precio">$5.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Mora -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="MoraLeche" value="5900"
+      data-nombre="Jugo en leche - Mora" data-precio="5900"
+      onchange="toggleCantidad(this)"> Mora en leche</label>
+    <span class="precio">$5.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Guanábana -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="GuanabanaLeche" value="5900"
+      data-nombre="Jugo en leche - Guanábana" data-precio="5900"
+      onchange="toggleCantidad(this)"> Guanábana en leche</label>
+    <span class="precio">$5.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Piña -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="PinaLeche" value="5900"
+      data-nombre="Jugo en leche - Piña" data-precio="5900"
+      onchange="toggleCantidad(this)"> Piña en leche</label>
+    <span class="precio">$5.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+  <!-- Mandarina -->
+  <div class="item"><div class="item-linea">
+    <label><input type="checkbox" class="check-plato"
+      name="MandarinaLeche" value="5900"
+      data-nombre="Jugo en leche - Mandarina" data-precio="5900"
+      onchange="toggleCantidad(this)"> Mandarina en leche</label>
+    <span class="precio">$5.900</span>
+    <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
+  </div></div>
+
+</div>
 
 <!-- Limonadas -->
 <div class="item"><div class="item-linea">

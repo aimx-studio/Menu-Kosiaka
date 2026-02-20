@@ -63,6 +63,7 @@ h2 {
 .item label {
   font-weight: normal;
   flex: 1 1 auto;
+  font-size: 20px;
 }
 
 .item span {
@@ -471,4 +472,92 @@ body::before {
   border-color: #d35400;
   box-shadow: 0 0 5px rgba(230, 126, 34, 0.35);
   outline: none;
+}
+
+.seccion-oculta.activa {
+  display: block;
+}
+
+/* Quitar centrado si lo hubiera */
+.item-subseccion .item-linea {
+  text-align: left;
+}
+
+/* Que no parezca título principal */
+.subtitulo {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+/* Quitar centrado si lo hubiera */
+.item-subseccion .item-linea {
+  text-align: left;
+}
+
+/* Que no parezca título principal */
+.subtitulo {
+  font-size: 19px;
+  font-weight: bolder;
+}
+
+/* Contenedores de jugos en agua y leche */
+#jugosAgua,
+#jugosLeche {
+  display: none;           /* Oculto por defecto */
+  border: 2px solid #ffcc80;  /* Borde visible para diferenciar */
+  border-radius: 10px;     /* Esquinas redondeadas */
+  padding: 10px;           /* Espacio interno */
+  margin-left: 10px;       /* Separación a la izquierda */
+  margin-top: 5px;         /* Separación arriba */
+  background-color: #fff8e1; /* Color de fondo diferente */
+}
+
+/* Cuando se abre la sección (el JS ya hace display:block) */
+#jugosAgua.abierto,
+#jugosLeche.abierto {
+  display: block;
+}
+
+/* Checkbox labels dentro de jugos, alineados a la izquierda */
+#jugosAgua .item-linea label,
+#jugosLeche .item-linea label {
+  font-size: 1.2rem;      /* Un poquito más grande si quieres */
+  text-align: left;
+  display: block;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 480px) {
+  #jugosAgua .item-linea label,
+  #jugosLeche .item-linea label {
+    font-size: 1rem;
+  }
+}
+
+/* Opcional: un pequeño hover para los items de jugos */
+#jugosAgua .item-linea:hover,
+#jugosLeche .item-linea:hover {
+  background-color: #fff0b3;
+  border-radius: 6px;
+}
+
+/* ==================== Tamaño general de letra del menú ==================== */
+.item label {
+  font-size: 20px; /* Desktop */
+}
+
+@media (max-width: 480px) {
+  .item label {
+    font-size: 18px; /* Móvil */
+  }
+}
+
+/* Subtítulos de subsecciones (Jugos) */
+.item-subseccion .titulo-seccion {
+    font-size: 19px;        /* tamaño más pequeño que el título principal */
+    background: none;       /* quita el fondo */
+    box-shadow: none;       /* quita la sombra */
+    padding: 5px 0;         /* ajusta padding */
+    justify-content: center; /* alinea a la izquierda */
+    gap: 8px;               /* espacio entre emoji y texto */
 }
