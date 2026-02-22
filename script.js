@@ -273,7 +273,7 @@ if (efectivo && efectivo.trim()) mensaje += "💵 Con cuánto paga: " + efectivo
 if (totalFormatted) mensaje += "Total: " + totalFormatted;
 
       try {
-        await fetch("https://hook.us2.make.com/441esp3obonm9vnadt7rcko3e4kngepr", {
+        await fetch("https://hook.us2.make.com/w2ce1alhljopb3vpiyq6xpgqftvo1k4j", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: mensaje })
