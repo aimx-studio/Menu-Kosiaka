@@ -157,6 +157,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===================== ENVÍO A MAKE (MEJORADO) =====================
   if (pedidoForm) {
+
+    let enviando = false;
+    let ultimoEnvio = 0;
+
     pedidoForm.addEventListener("submit", async function(e) {
 
       if (!confirmCheckbox || !confirmCheckbox.checked) {
@@ -166,6 +170,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       e.preventDefault();
+      const ahora = Date.now();
+
+      // Bloqueo por doble envío rápido (5 segundos)
+     if (ahora - ultimoEnvio < 5000) return;
+
+      // Si ya se está enviando, no permitir otro envío
+      if (enviando) return;
+
+       ultimoEnvio = ahora;
+       enviando = true;
+
+       const botonEnviar = pedidoForm.querySelector("button[type='submit']");
+      if (botonEnviar) {
+      botonEnviar.disabled = true;
+      botonEnviar.innerText = "Enviando...";
+      }
 
       const nombre = document.getElementById("nombre")?.value;
       const telefono = document.getElementById("telefono")?.value;
@@ -263,6 +283,13 @@ if (totalFormatted) mensaje += "Total: " + totalFormatted;
 
       } catch (error) {
         console.error("Error enviando a Make:", error);
+
+        enviando = false;
+        
+        if (botonEnviar) {
+        botonEnviar.disabled = false;
+        botonEnviar.innerText = "Enviar pedido";
+        }
         alert("Error enviando el pedido. Intenta nuevamente.");
       }
     });
