@@ -26,8 +26,18 @@
         </p>
 
         <p class="gracias final">¡Gracias por confiar en nosotros! 💛</p>
-        <a href="index.html" class="btn">⬅️ Volver al menu</a>
-    </div>
-    </div>
-</body>
-</html>
+
+        <a href="#" onclick="volverMenu()" class="btn">⬅️ Volver al menú</a>
+
+        </div>
+        </div>
+
+        <script>
+        function volverMenu(){
+        localStorage.removeItem("pedidoEnviado");
+        window.location.href = "index.html";
+        }
+    </script>
+
+    </body>
+    </html>

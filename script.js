@@ -31,6 +31,11 @@ function toggleCantidad(checkbox) {
 // ===================== DOM READY =====================
 document.addEventListener("DOMContentLoaded", () => {
 
+  // 🔹 Si el pedido ya fue enviado, ir a la página de gracias
+if (localStorage.getItem("pedidoEnviado") === "true") {
+  window.location.href = "gracias.html";
+}
+
   const tipoEntrega = document.getElementById("tipoEntrega");
   const direccionField = document.getElementById("direccionField");
   const direccionInput = document.getElementById("direccion");
@@ -231,13 +236,13 @@ document.addEventListener("DOMContentLoaded", () => {
           }) 
         : "";
 
-      let mensaje = "📦 Nuevo pedido recibido\n\n";
+      let mensaje = "📦 *NUEVO PEDIDO*\n\n";
 
-if (nombre) mensaje += "👤 Nombre: " + nombre + "\n\n";
-if (telefono) mensaje += "📞 Número: " + telefono + "\n\n";
+if (nombre) mensaje += "👤 *Nombre:* " + nombre + "\n\n";
+if (telefono) mensaje += "📞 *Número:* " + telefono + "\n\n";
 
 if (platos.trim()) {
-  mensaje += "🍽️ Platos:\n" + platos + "\n";
+  mensaje += "🍽️ *Platos:*\n" + platos + "\n";
 }
 
 if (adicionales.trim()) {
@@ -245,7 +250,7 @@ if (adicionales.trim()) {
 }
 
 if (extra && extra.trim()) {
-  mensaje += "📝 Extra:\n" + extra + "\n\n";
+  mensaje += "📝 *Extras:*\n" + extra + "\n\n";
 }
 
 if (metodoEntrega) {
@@ -254,7 +259,7 @@ if (metodoEntrega) {
   if (metodoEntrega === "domicilio") metodoTexto = "Domicilio";
   if (metodoEntrega === "comer") metodoTexto = "Comer en el local";
 
-  mensaje += "📦 Método: " + metodoTexto + "\n";
+  mensaje += "📦 *Entrega:* " + metodoTexto + "\n";
 
   if (mesa) {
     mensaje += "🪑 Mesa: " + mesa + "\n";
@@ -264,34 +269,44 @@ if (metodoEntrega) {
 }
 
 if (metodoEntrega === "domicilio" && direccion && direccion.trim()) {
-  mensaje += "📍 Dirección: " + direccion + "\n\n";
+  mensaje += "📍 *Dirección:* " + direccion + "\n\n";
 }
 
-if (metodoPago) mensaje += "💳 Forma de Pago: " + metodoPago + "\n\n";
+if (metodoPago) mensaje += "💳 *Forma de Pago:* " + metodoPago + "\n\n";
 if (efectivo && efectivo.trim()) mensaje += "💵 Con cuánto paga: " + efectivo + "\n\n";
 
-if (totalFormatted) mensaje += "Total: " + totalFormatted;
+if (totalFormatted) mensaje += "💰 *Total:* " + totalFormatted;
 
       try {
-        await fetch("https://hook.us2.make.com/w2ce1alhljopb3vpiyq6xpgqftvo1k4j", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: mensaje })
-        });
 
-        window.location.href = "gracias.html";
+const numero = "573015513793"; // número del restaurante
 
-      } catch (error) {
-        console.error("Error enviando a Make:", error);
+const url = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + encodeURIComponent(mensaje);
 
-        enviando = false;
-        
-        if (botonEnviar) {
-        botonEnviar.disabled = false;
-        botonEnviar.innerText = "Enviar pedido";
-        }
-        alert("Error enviando el pedido. Intenta nuevamente.");
-      }
+// guardar que el pedido fue enviado
+localStorage.setItem("pedidoEnviado", "true");
+
+// abrir WhatsApp
+window.open(url, "_blank");
+
+// redirigir a página de agradecimiento
+setTimeout(() => {
+  window.location.href = "gracias.html";
+}, 1000);
+
+} catch (error) {
+
+console.error("Error generando el pedido:", error);
+
+enviando = false;
+
+if (botonEnviar) {
+botonEnviar.disabled = false;
+botonEnviar.innerText = "Enviar pedido";
+}
+
+alert("Error generando el pedido. Intenta nuevamente.");
+}
     });
   }
 
