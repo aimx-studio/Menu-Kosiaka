@@ -561,3 +561,15 @@ body::before {
     justify-content: center; /* alinea a la izquierda */
     gap: 8px;               /* espacio entre emoji y texto */
 }
+
+/* Separar TOTAL del checkbox de confirmación */
+.menu-section .form-group {
+  margin-top: 20px;
+}
+
+/* En móvil un poco más de espacio */
+@media (max-width: 600px) {
+  .menu-section .form-group {
+    margin-top: 25px;
+  }
+}
