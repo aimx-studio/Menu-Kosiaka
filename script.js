@@ -32,7 +32,8 @@ function toggleCantidad(checkbox) {
 document.addEventListener("DOMContentLoaded", () => {
 
   // 🔹 Si el pedido ya fue enviado, ir a la página de gracias
-if (localStorage.getItem("pedidoEnviado") === "true") {
+if (sessionStorage.getItem("pedidoEnviado") === "true") {
+  sessionStorage.removeItem("pedidoEnviado");
   window.location.href = "gracias.html";
 }
 
@@ -185,6 +186,7 @@ if (localStorage.getItem("pedidoEnviado") === "true") {
 
        ultimoEnvio = ahora;
        enviando = true;
+       pedidoForm.style.pointerEvents = "none";
 
        const botonEnviar = pedidoForm.querySelector("button[type='submit']");
       if (botonEnviar) {
@@ -284,7 +286,7 @@ const numero = "573015513793"; // número del restaurante
 const url = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + encodeURIComponent(mensaje);
 
 // guardar que el pedido fue enviado
-localStorage.setItem("pedidoEnviado", "true");
+sessionStorage.setItem("pedidoEnviado", "true");
 
 // abrir WhatsApp
 window.open(url, "_blank");
@@ -299,6 +301,7 @@ setTimeout(() => {
 console.error("Error generando el pedido:", error);
 
 enviando = false;
+pedidoForm.style.pointerEvents = "auto";
 
 if (botonEnviar) {
 botonEnviar.disabled = false;
@@ -310,4 +313,4 @@ alert("Error generando el pedido. Intenta nuevamente.");
     });
   }
 
-})
+}) 
