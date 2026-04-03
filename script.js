@@ -279,37 +279,56 @@ if (efectivo && efectivo.trim()) mensaje += "💵 Con cuánto paga: " + efectivo
 
 if (totalFormatted) mensaje += "💰 *Total:* " + totalFormatted;
 
-      try {
+  try {
 
-const numero = "573015513793"; // número del restaurante
+  const datosPedido = {
+    nombre:        nombre         || "",
+    telefono:      telefono       || "",
+    platos:        platos.trim()  || "",
+    metodoEntrega: metodoEntrega  || "",
+    direccion:     direccion      || "",
+    metodoPago:    metodoPago     || "",
+    total: Number(total).toLocaleString("es-CO") || "0"
+  };
 
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwNdzFT9_gcHzUbuVpwvZTKGFiyaNQd1jiV9crhx-ECjbYZyS91YcTC0Aq0tSE0EGQ4Pg/exec";
+
+  const respuesta = await fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(datosPedido),
+    headers: { "Content-Type": "text/plain;charset=utf-8" }
+  });
+
+  const resultado = await respuesta.json();
+
+  if (resultado.resultado === "ok") {
+
+    const numero = "573015513793";
 const url = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + encodeURIComponent(mensaje);
 
-// guardar que el pedido fue enviado
 sessionStorage.setItem("pedidoEnviado", "true");
 
-// abrir WhatsApp
-window.open(url, "_blank");
+window.location.href = url;
 
-// redirigir a página de agradecimiento
-setTimeout(() => {
-  window.location.href = "gracias.html";
-}, 1000);
+  } else {
+    throw new Error("Error en Sheets: " + resultado.mensaje);
+  }
 
 } catch (error) {
 
-console.error("Error generando el pedido:", error);
+  console.error("Error al enviar el pedido:", error);
 
-enviando = false;
-pedidoForm.style.pointerEvents = "auto";
+  enviando = false;
+  pedidoForm.style.pointerEvents = "auto";
 
-if (botonEnviar) {
-botonEnviar.disabled = false;
-botonEnviar.innerText = "Enviar pedido";
+  if (botonEnviar) {
+    botonEnviar.disabled = false;
+    botonEnviar.innerText = "📲 Enviar Pedido";
+  }
+
+  alert("❌ Error al enviar el pedido. Revisa tu conexión e intenta de nuevo.");
 }
 
-alert("Error generando el pedido. Intenta nuevamente.");
-}
     });
   }
 
