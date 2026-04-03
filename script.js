@@ -288,7 +288,7 @@ if (totalFormatted) mensaje += "💰 *Total:* " + totalFormatted;
     metodoEntrega: metodoEntrega  || "",
     direccion:     direccion      || "",
     metodoPago:    metodoPago     || "",
-    total: Number(total).toLocaleString("es-CO") || "0"
+    total: Number(total) || 0
   };
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwNdzFT9_gcHzUbuVpwvZTKGFiyaNQd1jiV9crhx-ECjbYZyS91YcTC0Aq0tSE0EGQ4Pg/exec";
