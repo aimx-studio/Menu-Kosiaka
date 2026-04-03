@@ -288,31 +288,24 @@ if (totalFormatted) mensaje += "💰 *Total:* " + totalFormatted;
     metodoEntrega: metodoEntrega  || "",
     direccion:     direccion      || "",
     metodoPago:    metodoPago     || "",
-    total: Number(total) || 0
+    total:         Number(total)  || 0
   };
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwNdzFT9_gcHzUbuVpwvZTKGFiyaNQd1jiV9crhx-ECjbYZyS91YcTC0Aq0tSE0EGQ4Pg/exec";
 
-  const respuesta = await fetch(APPS_SCRIPT_URL, {
+  // Enviar a Sheets SIN esperar respuesta (no tiene await)
+  fetch(APPS_SCRIPT_URL, {
     method: "POST",
     body: JSON.stringify(datosPedido),
     headers: { "Content-Type": "text/plain;charset=utf-8" }
   });
 
-  const resultado = await respuesta.json();
+  // Ir a WhatsApp de inmediato sin esperar
+  const numero = "573015513793";
+  const url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensaje);
 
-  if (resultado.resultado === "ok") {
-
-    const numero = "573015513793";
-const url = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + encodeURIComponent(mensaje);
-
-sessionStorage.setItem("pedidoEnviado", "true");
-
-window.location.href = url;
-
-  } else {
-    throw new Error("Error en Sheets: " + resultado.mensaje);
-  }
+  sessionStorage.setItem("pedidoEnviado", "true");
+  window.location.href = url;
 
 } catch (error) {
 
