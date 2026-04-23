@@ -293,12 +293,44 @@ if (totalFormatted) mensaje += "💰 *Total:* " + totalFormatted;
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwNdzFT9_gcHzUbuVpwvZTKGFiyaNQd1jiV9crhx-ECjbYZyS91YcTC0Aq0tSE0EGQ4Pg/exec";
 
-  // Enviar a Sheets SIN esperar respuesta (no tiene await)
-  fetch(APPS_SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify(datosPedido),
-    headers: { "Content-Type": "text/plain;charset=utf-8" }
-  });
+// Enviar a Sheets SIN esperar respuesta (respaldo)
+fetch(APPS_SCRIPT_URL, {
+  method: "POST",
+  body: JSON.stringify(datosPedido),
+  headers: { "Content-Type": "text/plain;charset=utf-8" }
+});
+
+// Enviar a Supabase (principal)
+const SUPABASE_URL = "https://hotryxyvbdbizfivgfft.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvdHJ5eHl2YmRiaXpmaXZnZmZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MDk1MDMsImV4cCI6MjA5MjM4NTUwM30.e_8rXHLVKl8gGH7r65LzCbXpLVygnHJf3lSvYXqosfw";
+const ahora2 = new Date();
+const dia   = ahora2.getDate();
+const mes   = ahora2.getMonth() + 1;
+const anio  = ahora2.getFullYear();
+const horas = String(ahora2.getHours()).padStart(2,'0');
+const mins  = String(ahora2.getMinutes()).padStart(2,'0');
+const segs  = String(ahora2.getSeconds()).padStart(2,'0');
+const fechaStr = `${dia}/${mes}/${anio} ${horas}:${mins}:${segs}`;
+
+fetch(`${SUPABASE_URL}/rest/v1/pedidos`, {
+  method: "POST",
+  headers: {
+    "apikey": SUPABASE_KEY,
+    "Authorization": `Bearer ${SUPABASE_KEY}`,
+    "Content-Type": "application/json",
+    "Prefer": "return=minimal"
+  },
+  body: JSON.stringify({
+    Fecha:     fechaStr,
+    Nombre:    nombre      || "",
+    Telefono:  telefono    || "",
+    Platos:    platos.trim()|| "",
+    Entrega:   metodoEntrega === "domicilio" ? "Domicilio" : metodoEntrega === "comer" ? "Comer" : "Local",
+    Direccion: direccion   || "",
+    Pago:      metodoPago  || "",
+    Total:     "$" + Number(total).toLocaleString("es-CO")
+  })
+});
 
   // Ir a WhatsApp de inmediato sin esperar
   const numero = "573015513793";
