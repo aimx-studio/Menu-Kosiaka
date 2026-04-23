@@ -122,6 +122,26 @@
   </div>
 </div>
 
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+      name="La Trilliza"
+      value="La Trilliza"
+      onchange="toggleCantidad(this); toggleDescripcion(this)">
+      La Trilliza
+    </label>
+    <span>$21.000</span>
+    <input type="number" class="cantidad"
+      name="Latrillisa-esCantidad"
+      value="0" min="0"
+      onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">
+    Pan brioche, salsa de ajo, pechuga de pollo, cañon, carne artesanal, queso cheddar y tocineta.
+  </div>
+</div>
+
 <!-- Hamburguesa Quesuda -->
 <div class="item">
   <div class="item-linea">
