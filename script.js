@@ -62,6 +62,14 @@ if (sessionStorage.getItem("pedidoEnviado") === "true") {
     const cantidadInput = cb.closest(".item")?.querySelector(".cantidad");
     if (cantidadInput) cantidadInput.disabled = !cb.checked;
     cb.addEventListener("change", () => toggleCantidad(cb));
+    if (cantidadInput) {
+      cantidadInput.addEventListener("input", () => {
+  if (cb.checked && cantidadInput.value !== "" && Number(cantidadInput.value) < 1) {
+    cantidadInput.value = 1;
+  }
+  calcularTotal();
+});
+    }
   });
 
   // ===================== Tipo de entrega =====================
