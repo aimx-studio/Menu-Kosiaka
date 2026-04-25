@@ -336,7 +336,8 @@ fetch(`${SUPABASE_URL}/rest/v1/pedidos`, {
     Entrega:   metodoEntrega === "domicilio" ? "Domicilio" : metodoEntrega === "comer" ? "Comer" : "Local",
     Direccion: direccion   || "",
     Pago:      metodoPago  || "",
-    Total:     "$" + Number(total).toLocaleString("es-CO")
+    Total:     "$" + Number(total).toLocaleString("es-CO"),
+    Extras:    especificaciones || "",
   })
 });
 
