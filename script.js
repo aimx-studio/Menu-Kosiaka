@@ -338,7 +338,7 @@ fetch(`${SUPABASE_URL}/rest/v1/pedidos`, {
     "apikey": SUPABASE_KEY,
     "Authorization": `Bearer ${SUPABASE_KEY}`,
     "Content-Type": "application/json",
-    "Prefer": "return=minimal"
+    "Prefer": "return=representation"
   },
   body: JSON.stringify({
     Fecha:     fechaStr,
@@ -352,14 +352,20 @@ fetch(`${SUPABASE_URL}/rest/v1/pedidos`, {
     Extras:    especificaciones || "",
     Efectivo:  efectivo && efectivo.trim() ? "$" + parseInt(efectivo.replace(/\D/g,'')).toLocaleString("es-CO") : "",
   })
-});
-
-  // Ir a WhatsApp de inmediato sin esperar
-  const numero = "573015513793";
-  const url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensaje);
-
+})
+.then(res => res.json())
+.then(data => {
+  const id = data?.[0]?.id;
+  if (id) {
+    mensaje += `\n\n🖨️ *Ticket:* https://aimx-studio.github.io/Menu-Kosiaka/ticket.html?id=${id}`;
+  }
   sessionStorage.setItem("pedidoEnviado", "true");
-  window.location.href = url;
+  window.location.href = "https://wa.me/573015513793?text=" + encodeURIComponent(mensaje);
+})
+.catch(() => {
+  sessionStorage.setItem("pedidoEnviado", "true");
+  window.location.href = "https://wa.me/573015513793?text=" + encodeURIComponent(mensaje);
+});
 
 } catch (error) {
 

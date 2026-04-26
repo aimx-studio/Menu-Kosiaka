@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ticket - Kosiaka</title>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  #cargando {
+    margin-top: 60px;
+    font-size: 15px;
+    color: #666;
+  }
+
+  .ticket {
+    width: 100%;
+    max-width: 340px;
+    background: white;
+    border-radius: 4px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+    font-family: 'Courier Prime', monospace;
+  }
+
+  .t-brand { text-align: center; margin-bottom: 4px; }
+  .t-nombre { font-family: 'DM Sans', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #111; }
+  .t-sub { font-family: 'Courier Prime', monospace; font-size: 12px; color: #555; margin-top: 2px; }
+  .t-direccion { font-size: 11px; color: #888; margin-top: 2px; }
+
+  .sep { border: none; border-top: 1px dashed #bbb; margin: 12px 0; }
+
+  .fila { display: flex; justify-content: space-between; align-items: flex-start; font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .fila-val { font-size: 13px; color: #111; font-weight: 600; text-transform: none; letter-spacing: 0; text-align: right; }
+
+  .sec-label { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+
+  .cliente-nombre { font-family: 'DM Sans', sans-serif; font-size: 20px; font-weight: 700; color: #111; margin-bottom: 2px; }
+  .cliente-tel { font-size: 13px; color: #555; }
+
+  .plato-item { display: flex; gap: 10px; align-items: baseline; margin-bottom: 5px; font-size: 13px; color: #222; }
+  .plato-cant { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 13px; color: #c62828; flex-shrink: 0; min-width: 28px; }
+  .plato-nombre { flex: 1; line-height: 1.4; }
+
+  .info-fila { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
+  .info-label { color: #999; text-transform: uppercase; letter-spacing: 1px; font-size: 11px; }
+  .info-val { font-weight: 600; color: #111; font-size: 13px; text-align: right; max-width: 60%; }
+
+  .total-fila { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+  .total-label { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #111; }
+  .total-valor { font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 700; color: #111; }
+
+  .t-footer { text-align: center; font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  .acciones { display: flex; gap: 10px; margin-bottom: 16px; width: 100%; max-width: 340px; }
+  .btn-imprimir { flex: 1; background: #c62828; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .acciones { display: none !important; }
+    .ticket { box-shadow: none; max-width: 100%; }
+    @page { margin: 0; size: 80mm auto; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cargando">Cargando ticket...</div>
+
+<div class="acciones" id="acciones" style="display:none">
+  <button class="btn-imprimir" onclick="window.print()">Imprimir</button>
+</div>
+
+<div class="ticket" id="ticket" style="display:none"></div>
+
+<script>
+  const SUPABASE_URL = "https://hotryxyvbdbizfivgfft.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvdHJ5eHl2YmRiaXpmaXZnZmZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MDk1MDMsImV4cCI6MjA5MjM4NTUwM30.e_8rXHLVKl8gGH7r65LzCbXpLVygnHJf3lSvYXqosfw";
+
+  const params = new URLSearchParams(window.location.search);
+
+  function normalizarEntrega(val) {
+    if (!val) return "—";
+    const v = val.toLowerCase().trim();
+    if (v.includes("comer")) return "Comer en el local";
+    if (v.includes("recoger") || v === "local") return "Recoger en el local";
+    if (v === "domicilio") return "Domicilio";
+    return val;
+  }
+
+  function parseQtyItem(linea) {
+    const line = linea.replace(/^[•\-\*]\s*/, '').trim();
+    const m1 = line.match(/^(\d+)\s*[×x]\s*(.+)/i);
+    const m2 = line.match(/^(.+?)\s*[×x]\s*(\d+)$/i);
+    if (m1) {
+      const nombre = m1[2].replace(/\s*—\s*\$[\d.,]+$/, '').trim();
+      const precio = m1[2].match(/—\s*(\$[\d.,]+)$/)?.[1] || '';
+      return { qty: m1[1], nombre, precio };
+    }
+    if (m2) {
+      return { qty: m2[2], nombre: m2[1].trim(), precio: '' };
+    }
+    return { qty: '1', nombre: line, precio: '' };
+  }
+
+  function calcularDevuelta(efectivo, total) {
+    const paga = parseInt(String(efectivo || '').replace(/\D/g, ''));
+    const tot  = parseInt(String(total   || '').replace(/\D/g, ''));
+    if (!paga || !tot || paga <= tot) return null;
+    return paga - tot;
+  }
+
+  if (params.has("nombre") || params.has("platos")) {
+    renderTicket({
+      id:        params.get("id")       || "—",
+      Fecha:     params.get("fecha")    || "—",
+      Nombre:    params.get("nombre")   || "—",
+      Telefono:  params.get("tel")      || "—",
+      Platos:    params.get("platos")   || "",
+      Entrega:   params.get("entrega")  || "—",
+      Direccion: params.get("dir")      || "",
+      Pago:      params.get("pago")     || "",
+      Efectivo:  params.get("efectivo") || "",
+      Total:     params.get("total")    || "—"
+    });
+
+  } else if (params.has("id")) {
+    fetch(`${SUPABASE_URL}/rest/v1/pedidos?id=eq.${params.get("id")}&select=*`, {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data || data.length === 0) {
+        document.getElementById("cargando").textContent = "No se encontro el ticket.";
+        return;
+      }
+      const r = data[0];
+      renderTicket({
+        id:        r.id        || "—",
+        Fecha:     r.Fecha     || "—",
+        Nombre:    r.Nombre    || "—",
+        Telefono:  r.Telefono  || "—",
+        Platos:    r.Platos    || "",
+        Entrega:   r.Entrega   || "—",
+        Direccion: r.Direccion || "",
+        Pago:      r.Pago      || "",
+        Efectivo:  r.Efectivo  || "",
+        Total:     r.Total     || "—"
+      });
+    })
+    .catch(() => {
+      document.getElementById("cargando").textContent = "Error al cargar el ticket.";
+    });
+
+  } else {
+    document.getElementById("cargando").textContent = "No se encontro el ticket.";
+  }
+
+  function renderTicket(p) {
+    const platos = p.Platos.split("\n").filter(Boolean);
+    const platosHTML = platos.map(linea => {
+      const { qty, nombre, precio } = parseQtyItem(linea);
+      return `<div class="plato-item">
+        <span class="plato-cant">${qty}x</span>
+        <span class="plato-nombre">${nombre}${precio ? `<span style="color:#888;font-size:11px;margin-left:4px">${precio}</span>` : ''}</span>
+      </div>`;
+    }).join("");
+
+    const entregaMostrar = normalizarEntrega(p.Entrega);
+    const idMostrar = String(p.id).padStart(3, '0');
+    const devuelta = calcularDevuelta(p.Efectivo, p.Total);
+
+    document.getElementById("ticket").innerHTML = `
+      <div class="t-brand">
+        <div class="t-nombre">Kosiaka</div>
+        <div class="t-sub">Sistema de Pedidos</div>
+        <div class="t-direccion">powered by AIMAX</div>
+      </div>
+      <hr class="sep">
+      <div class="fila"><span>PEDIDO #</span><span class="fila-val">${idMostrar}</span></div>
+      <div class="fila"><span>FECHA/HORA</span><span class="fila-val">${p.Fecha}</span></div>
+      <hr class="sep">
+      <div class="sec-label">CLIENTE</div>
+      <div class="cliente-nombre">${p.Nombre}</div>
+      ${p.Telefono && p.Telefono !== "—" ? `<div class="cliente-tel">${p.Telefono}</div>` : ''}
+      <hr class="sep">
+      <div class="sec-label">DETALLE DEL PEDIDO</div>
+      ${platosHTML || '<div class="plato-item"><span class="plato-nombre">—</span></div>'}
+      <hr class="sep">
+      <div class="info-fila"><span class="info-label">ENTREGA</span><span class="info-val">${entregaMostrar}</span></div>
+      ${p.Direccion ? `<div class="info-fila"><span class="info-label">DIRECCION</span><span class="info-val">${p.Direccion}</span></div>` : ""}
+      ${p.Pago ? `<div class="info-fila"><span class="info-label">PAGO</span><span class="info-val">${p.Pago}</span></div>` : ""}
+      ${p.Efectivo ? `<div class="info-fila"><span class="info-label">PAGA CON</span><span class="info-val">${p.Efectivo}</span></div>` : ""}
+      ${devuelta !== null ? `<div class="info-fila"><span class="info-label">DEVUELTA</span><span class="info-val">$${devuelta.toLocaleString('es-CO')}</span></div>` : ""}
+      <hr class="sep">
+      <div class="total-fila">
+        <span class="total-label">TOTAL</span>
+        <span class="total-valor">${p.Total}</span>
+      </div>
+      <hr class="sep">
+      <div class="t-footer">Gracias por tu pedido!<br>Sistema de Pedidos AIMAX</div>
+    `;
+
+    document.getElementById("cargando").style.display = "none";
+    document.getElementById("acciones").style.display = "flex";
+    document.getElementById("ticket").style.display = "block";
+  }
+</script>
+</body>
+</html>
