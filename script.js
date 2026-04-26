@@ -247,8 +247,9 @@ let linea = `• ${cantidad} × ${nombreProducto}${precioTexto}`;
           }) 
         : "";
 
-      let mensaje = "📦 *NUEVO PEDIDO*\n\n";
-const horaMsg = ahora2.toLocaleTimeString("es-CO", { hour: "numeric", minute: "2-digit", hour12: true });
+      const ahoraMensaje = new Date();
+const horaMsg = ahoraMensaje.toLocaleTimeString("es-CO", { hour: "numeric", minute: "2-digit", hour12: true });
+let mensaje = "📦 *NUEVO PEDIDO*\n\n";
 if (horaMsg) mensaje += "🕐 *Hora:* " + horaMsg + "\n\n";
 if (nombre) mensaje += "👤 *Nombre:* " + nombre + "\n\n";
 if (telefono) mensaje += "📞 *Número:* " + telefono + "\n\n";
