@@ -161,7 +161,7 @@ if (sessionStorage.getItem("pedidoEnviado") === "true") {
       total += precio * Number(cantidadInput.value);
     });
 
-    if (tipoEntrega && tipoEntrega.value === "domicilio") total += 5000;
+    if (tipoEntrega && tipoEntrega.value === "domicilio") total += 5500;
 
     if (totalSpan) totalSpan.innerText = "$" + total.toLocaleString("es-CO");
     if (totalHiddenInput) totalHiddenInput.value = total;
@@ -357,7 +357,7 @@ fetch(`${SUPABASE_URL}/rest/v1/pedidos`, {
 .then(data => {
   const id = data?.[0]?.id;
   if (id) {
-    mensaje += `\n\n🖨️ *Ticket:* https://aimx-studio.github.io/Menu-Kosiaka/ticket.html?id=${id}`;
+   
   }
   sessionStorage.setItem("pedidoEnviado", "true");
   window.location.href = "https://wa.me/573015513793?text=" + encodeURIComponent(mensaje);
