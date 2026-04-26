@@ -345,11 +345,12 @@ fetch(`${SUPABASE_URL}/rest/v1/pedidos`, {
     Nombre:    nombre      || "",
     Telefono:  telefono    || "",
     Platos:    platos.trim()|| "",
-    Entrega:   metodoEntrega === "domicilio" ? "Domicilio" : metodoEntrega === "comer" ? "Comer" : "Local",
+    Entrega: metodoEntrega === "domicilio" ? "Domicilio" : metodoEntrega === "comer" ? "Comer en el local" : "Recoger en el local",
     Direccion: direccion   || "",
     Pago:      metodoPago  || "",
     Total:     "$" + Number(total).toLocaleString("es-CO"),
     Extras:    especificaciones || "",
+    Efectivo:  efectivo && efectivo.trim() ? "$" + parseInt(efectivo.replace(/\D/g,'')).toLocaleString("es-CO") : "",
   })
 });
 
