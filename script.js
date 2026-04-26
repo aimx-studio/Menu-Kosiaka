@@ -223,7 +223,10 @@ if (sessionStorage.getItem("pedidoEnviado") === "true") {
 
         const cantidad = Number(cantidadInput.value);
         const nombreProducto = item.dataset.nombre || item.name || "Producto";
-        const precio = parseInt(item.dataset.precio) || 0;
+        const itemDiv2 = item.closest(".item");
+const spanPrecio = itemDiv2?.querySelector("span");
+const precioTextoRaw = spanPrecio?.innerText || spanPrecio?.textContent || "";
+const precio = parseInt(precioTextoRaw.replace(/\$|\./g, '').replace(/,/g, '')) || 0;
 
         const precioTexto = precio ? " — $" + precio.toLocaleString("es-CO") : "";
 let linea = `• ${cantidad} × ${nombreProducto}${precioTexto}`;
