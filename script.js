@@ -225,7 +225,8 @@ if (sessionStorage.getItem("pedidoEnviado") === "true") {
         const nombreProducto = item.dataset.nombre || item.name || "Producto";
         const precio = parseInt(item.dataset.precio) || 0;
 
-        let linea = `• ${nombreProducto} ×${cantidad}`;
+        const precioTexto = precio ? " — $" + precio.toLocaleString("es-CO") : "";
+let linea = `• ${cantidad} × ${nombreProducto}${precioTexto}`;
 
         platos += linea + "\n";
       });
@@ -247,7 +248,8 @@ if (sessionStorage.getItem("pedidoEnviado") === "true") {
         : "";
 
       let mensaje = "📦 *NUEVO PEDIDO*\n\n";
-
+const horaMsg = ahora2.toLocaleTimeString("es-CO", { hour: "numeric", minute: "2-digit", hour12: true });
+if (horaMsg) mensaje += "🕐 *Hora:* " + horaMsg + "\n\n";
 if (nombre) mensaje += "👤 *Nombre:* " + nombre + "\n\n";
 if (telefono) mensaje += "📞 *Número:* " + telefono + "\n\n";
 
@@ -283,7 +285,13 @@ if (metodoEntrega === "domicilio" && direccion && direccion.trim()) {
 }
 
 if (metodoPago) mensaje += "💳 *Forma de Pago:* " + metodoPago + "\n\n";
-if (efectivo && efectivo.trim()) mensaje += "💵 Con cuánto paga: " + efectivo + "\n\n";
+if (efectivo && efectivo.trim()) {
+  const pagoNum = parseInt(efectivo.replace(/\D/g, ''));
+  const totalNum = Number(total) || 0;
+  const devuelta = pagoNum - totalNum;
+  mensaje += "💵 *Paga con:* $" + pagoNum.toLocaleString("es-CO") + "\n\n";
+  if (devuelta >= 0) mensaje += "↩️ *Devuelta:* $" + devuelta.toLocaleString("es-CO") + "\n\n";
+}
 
 if (totalFormatted) mensaje += "💰 *Total:* " + totalFormatted;
 
