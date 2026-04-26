@@ -176,7 +176,7 @@
       const { qty, nombre, precio } = parseQtyItem(linea);
       return `<div class="plato-item">
         <span class="plato-cant">${qty}x</span>
-        <span class="plato-nombre">${nombre}${precio ? `<span style="color:#888;font-size:11px;margin-left:4px">${precio}</span>` : ''}</span>
+        <span class="plato-nombre">${nombre}${precio ? ` — ${precio}` : ''}</span>
       </div>`;
     }).join("");
 
