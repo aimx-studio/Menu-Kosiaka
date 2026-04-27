@@ -297,7 +297,7 @@ if (efectivo && efectivo.trim()) {
   if (devuelta >= 0) mensaje += "↩️ *Devuelta:* $" + devuelta.toLocaleString("es-CO") + "\n\n";
 }
 
-if (totalFormatted) mensaje += "💰 *Total:* " + totalFormatted;
+if (totalFormatted) mensaje += "\n💰 *Total:* " + totalFormatted;
 
   try {
 
