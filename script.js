@@ -252,52 +252,41 @@ let linea = `• ${cantidad} × ${nombreProducto}${precioTexto}`;
 
       const ahoraMensaje = new Date();
 const horaMsg = ahoraMensaje.toLocaleTimeString("es-CO", { hour: "numeric", minute: "2-digit", hour12: true });
-let mensaje = "📦 *NUEVO PEDIDO*\n\n";
+      let mensaje = "";
 if (horaMsg) mensaje += "🕐 *Hora:* " + horaMsg + "\n\n";
-if (nombre) mensaje += "👤 *Nombre:* " + nombre + "\n\n";
-if (telefono) mensaje += "📞 *Número:* " + telefono + "\n\n";
-
-if (platos.trim()) {
-  mensaje += "🍽️ *Platos:*\n" + platos + "\n";
-}
-
-if (adicionales.trim()) {
-  mensaje += "➕ Adicionales:\n" + adicionales + "\n";
-}
-
-if (extra && extra.trim()) {
-  mensaje += "📝 *Extras:*\n" + extra + "\n\n";
-}
 
 if (metodoEntrega) {
   let metodoTexto = metodoEntrega;
   if (metodoEntrega === "local") metodoTexto = "Recoger en el local";
   if (metodoEntrega === "domicilio") metodoTexto = "Domicilio";
   if (metodoEntrega === "comer") metodoTexto = "Comer en el local";
-
   mensaje += "📦 *Entrega:* " + metodoTexto + "\n";
-
-  if (mesa) {
-    mensaje += "🪑 Mesa: " + mesa + "\n";
-  }
-
-  mensaje += "\n";
+  if (mesa) mensaje += "🪑 *Mesa:* " + mesa + "\n";
 }
 
 if (metodoEntrega === "domicilio" && direccion && direccion.trim()) {
-  mensaje += "📍 *Dirección:* " + direccion + "\n\n";
+  mensaje += "📍 *Dirección:* " + direccion + "\n";
 }
 
-if (metodoPago) mensaje += "💳 *Forma de Pago:* " + metodoPago + "\n\n";
+mensaje += "\n";
+if (telefono) mensaje += "📞 *Número:* " + telefono + "\n";
+if (nombre) mensaje += "👤 *Nombre:* " + nombre + "\n\n";
+
+if (platos.trim()) mensaje += "🍽️ *Platos:*\n" + platos + "\n";
+if (adicionales.trim()) mensaje += "➕ *Adicionales:*\n" + adicionales + "\n";
+
+if (totalFormatted) mensaje += "💰 *Total:* " + totalFormatted + "\n\n";
+
+if (metodoPago) mensaje += "💳 *Forma de Pago:* " + metodoPago + "\n";
 if (efectivo && efectivo.trim()) {
   const pagoNum = parseInt(efectivo.replace(/\D/g, ''));
   const totalNum = Number(total) || 0;
   const devuelta = pagoNum - totalNum;
-  mensaje += "💵 *Paga con:* $" + pagoNum.toLocaleString("es-CO") + "\n\n";
-  if (devuelta >= 0) mensaje += "↩️ *Devuelta:* $" + devuelta.toLocaleString("es-CO") + "\n\n";
+  mensaje += "💵 *Paga con:* $" + pagoNum.toLocaleString("es-CO") + "\n";
+  if (devuelta >= 0) mensaje += "↩️ *Devuelta:* $" + devuelta.toLocaleString("es-CO") + "\n";
 }
 
-if (totalFormatted) mensaje += "\n💰 *Total:* " + totalFormatted;
+if (extra && extra.trim()) mensaje += "\n📝 *Extras:*\n" + extra + "\n";
 
   try {
 
