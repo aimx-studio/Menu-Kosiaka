@@ -57,6 +57,63 @@ if (sessionStorage.getItem("pedidoEnviado") === "true") {
 
   const checkboxes = document.querySelectorAll(".check-plato");
 
+  const SUPABASE_URL = "https://hotryxyvbdbizfivgfft.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvdHJ5eHl2YmRiaXpmaXZnZmZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MDk1MDMsImV4cCI6MjA5MjM4NTUwM30.e_8rXHLVKl8gGH7r65LzCbXpLVygnHJf3lSvYXqosfw";
+
+  // ===================== Autocompletar dirección por teléfono =====================
+const telefonoInput = document.getElementById("telefono");
+const avisoDir = document.createElement("p");
+avisoDir.id = "avisoDireccion";
+avisoDir.style.cssText = "color:#e67e22; font-size:0.9em; margin-top:4px; display:none;";
+avisoDir.innerHTML = "📍 Usamos tu última dirección. ¿Es correcta o deseas modificarla?";
+
+// Insertar aviso debajo del campo dirección
+if (direccionInput) {
+  direccionInput.parentNode.insertBefore(avisoDir, direccionInput.nextSibling);
+}
+
+async function buscarDireccionAnterior() {
+  const tel = telefonoInput?.value?.trim();
+  if (!tel || tipoEntrega?.value !== "domicilio") return;
+
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/pedidos?Telefono=eq.${encodeURIComponent(tel)}&Entrega=eq.Domicilio&select=Direccion,Fecha&order=Fecha.desc&limit=1`,
+      {
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+    const data = await res.json();
+    if (data.length > 0 && data[0].Direccion) {
+      direccionInput.value = data[0].Direccion;
+      avisoDir.style.display = "block";
+    } else {
+      avisoDir.style.display = "none";
+    }
+  } catch (err) {
+    console.warn("No se pudo buscar dirección anterior:", err);
+  }
+}
+
+// Buscar cuando cambia a domicilio
+if (tipoEntrega) {
+  tipoEntrega.addEventListener("change", () => {
+    if (tipoEntrega.value === "domicilio") {
+      buscarDireccionAnterior();
+    } else {
+      avisoDir.style.display = "none";
+    }
+  });
+}
+
+// También buscar si ya eligió domicilio y luego escribe el teléfono
+if (telefonoInput) {
+  telefonoInput.addEventListener("blur", buscarDireccionAnterior);
+}
+
   // ===================== Inicializar checkboxes =====================
   checkboxes.forEach(cb => {
     const cantidadInput = cb.closest(".item")?.querySelector(".cantidad");
@@ -310,8 +367,7 @@ fetch(APPS_SCRIPT_URL, {
 });
 
 // Enviar a Supabase (principal)
-const SUPABASE_URL = "https://hotryxyvbdbizfivgfft.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvdHJ5eHl2YmRiaXpmaXZnZmZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MDk1MDMsImV4cCI6MjA5MjM4NTUwM30.e_8rXHLVKl8gGH7r65LzCbXpLVygnHJf3lSvYXqosfw";
+
 const ahora2 = new Date();
 const dia   = ahora2.getDate();
 const mes   = ahora2.getMonth() + 1;
