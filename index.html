@@ -785,6 +785,28 @@
     </div>
   </div>
 
+  <!-- Machacalengue -->
+  <div class="item">
+    <div class="item-linea">
+      <label>
+        <input type="checkbox" class="check-plato"
+        name="Machacalengue"
+        value="Machacalengue"
+        onchange="toggleCantidad(this); toggleDescripcion(this)">
+        Machacalengue
+      </label>
+      <span>$18.000</span>
+      <input type="number" class="cantidad"
+        name="MachacalengueCantidad"
+        value="0" min="0"
+        onchange="calcularTotal()">
+    </div>
+    <div class="descripcion" style="display:none;">
+      Pan perro, carne zenú picada, salchicha zenú picada,
+      tocineta, queso y cebolla (opcional).
+    </div>
+  </div>
+
   <h2>🔥 Perras</h2>
 
   <!-- Perrita -->
@@ -1217,27 +1239,6 @@
     </div>
   </div>
 
-  <!-- Machacalengue -->
-  <div class="item">
-    <div class="item-linea">
-      <label>
-        <input type="checkbox" class="check-plato"
-        name="Machacalengue"
-        value="Machacalengue"
-        onchange="toggleCantidad(this); toggleDescripcion(this)">
-        Machacalengue
-      </label>
-      <span>$18.000</span>
-      <input type="number" class="cantidad"
-        name="MachacalengueCantidad"
-        value="0" min="0"
-        onchange="calcularTotal()">
-    </div>
-    <div class="descripcion" style="display:none;">
-      Pan perro, carne zenú picada, salchicha zenú picada,
-      tocineta, queso y cebolla (opcional).
-    </div>
-  </div>
 
   <!-- Burrito -->
   <div class="item">
