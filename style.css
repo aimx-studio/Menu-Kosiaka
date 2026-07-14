@@ -573,3 +573,56 @@ body::before {
     margin-top: 25px;
   }
 }
+
+/* ==================== Mitad y Mitad destacada ==================== */
+.item-destacado {
+  border: 2px solid #e67e22;
+  background: linear-gradient(135deg, #fff3e0, #ffe8cc);
+  border-radius: 12px;
+  padding: 12px 8px;
+  box-shadow: 0 3px 10px rgba(230,126,34,0.25);
+}
+
+.badge-especial {
+  display: inline-block;
+  background: #e67e22;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.pestanas-mitad-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.pestanas-mitad-botones button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1.5px solid #e67e22;
+  background: #fff;
+  color: #e67e22;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.pestanas-mitad-botones button.activa {
+  background: #e67e22;
+  color: #fff;
+}
+
+.pestana-mitad-panel {
+  display: none;
+  margin-top: 8px;
+}
+
+.pestana-mitad-panel.activa {
+  display: block;
+}

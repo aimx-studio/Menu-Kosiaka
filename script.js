@@ -40,10 +40,20 @@ function togglePizzaTamano(checkbox) {
   if (checkbox.checked) {
     wrapper.style.display = "block";
     if (select) actualizarPrecioPizza(select);
+    if (checkbox.dataset.mitadMitad === "true") {
+      const cantidadInput = item.querySelector(".cantidad");
+      if (cantidadInput) actualizarPestanasMitad(cantidadInput);
+    }
   } else {
     wrapper.style.display = "none";
     if (span) span.innerText = "Variable";
     if (select) select.selectedIndex = 0;
+    if (checkbox.dataset.mitadMitad === "true") {
+      const botonesDiv = item.querySelector(".pestanas-mitad-botones");
+      const contenidoDiv = item.querySelector(".pestanas-mitad-contenido");
+      if (botonesDiv) botonesDiv.innerHTML = "";
+      if (contenidoDiv) contenidoDiv.innerHTML = "";
+    }
   }
 }
 
@@ -55,6 +65,89 @@ function actualizarPrecioPizza(select) {
   const precio = parseInt(select.selectedOptions[0]?.dataset.precio) || 0;
   if (span) span.innerText = "$" + precio.toLocaleString("es-CO");
   calcularTotal();
+}
+
+const SABORES_PIZZA = [
+  "Napolitana","Peperoni","Hawaiiana","Pollo con Champiñones","Carnes",
+  "Ranchera","Mexicana","Vegetales","Paisa","Queso y Tocineta",
+  "Pollo BBQ","Kosiaka","Crispetas de Pollo","Teriyaki"
+];
+
+function opcionesSabores(seleccionado) {
+  return SABORES_PIZZA.map(s =>
+    `<option value="${s}" ${s === seleccionado ? "selected" : ""}>${s}</option>`
+  ).join("");
+}
+
+const PRECIOS_TAMANO_MITAD = { Personal: 23000, Media: 33000, Grande: 45000 };
+
+function opcionesTamano(seleccionado) {
+  return Object.keys(PRECIOS_TAMANO_MITAD).map(t =>
+    `<option value="${t}" ${t === seleccionado ? "selected" : ""}>${t} — $${PRECIOS_TAMANO_MITAD[t].toLocaleString("es-CO")}</option>`
+  ).join("");
+}
+
+function generarPestanaMitad(index, sabor1, sabor2, tamano) {
+  return `
+    <div class="pestana-mitad-panel ${index === 0 ? 'activa' : ''}" data-index="${index}">
+      <label style="font-size:14px; font-weight:bold; display:block;">Pizza ${index + 1} — Tamaño</label>
+      <select class="tamano-mitad" onchange="calcularTotal()">${opcionesTamano(tamano)}</select>
+      <label style="font-size:14px; font-weight:bold; display:block; margin-top:6px;">Pizza ${index + 1} — Sabor 1</label>
+      <select class="sabor-mitad-1">${opcionesSabores(sabor1)}</select>
+      <label style="font-size:14px; font-weight:bold; display:block; margin-top:6px;">Pizza ${index + 1} — Sabor 2</label>
+      <select class="sabor-mitad-2">${opcionesSabores(sabor2)}</select>
+    </div>
+  `;
+}
+
+function actualizarPestanasMitad(cantidadInput) {
+  const item = cantidadInput.closest(".item");
+  if (!item) return;
+  const checkbox = item.querySelector('.check-plato[data-mitad-mitad="true"]');
+  if (!checkbox) return;
+
+  const botonesDiv = item.querySelector(".pestanas-mitad-botones");
+  const contenidoDiv = item.querySelector(".pestanas-mitad-contenido");
+  if (!botonesDiv || !contenidoDiv) return;
+
+  const cantidad = Math.max(0, Number(cantidadInput.value) || 0);
+
+  const previos = Array.from(contenidoDiv.querySelectorAll(".pestana-mitad-panel")).map(p => ({
+    sabor1: p.querySelector(".sabor-mitad-1")?.value,
+    sabor2: p.querySelector(".sabor-mitad-2")?.value,
+    tamano: p.querySelector(".tamano-mitad")?.value
+  }));
+
+  botonesDiv.innerHTML = "";
+  contenidoDiv.innerHTML = "";
+
+  if (!checkbox.checked || cantidad < 1) return;
+
+  for (let i = 0; i < cantidad; i++) {
+    const prev = previos[i];
+    const sabor1 = prev?.sabor1 || SABORES_PIZZA[0];
+    const sabor2 = prev?.sabor2 || SABORES_PIZZA[1];
+    const tamano = prev?.tamano || "Personal";
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.innerText = "Pizza " + (i + 1);
+    if (i === 0) btn.classList.add("activa");
+    btn.onclick = () => mostrarPestanaMitad(item, i);
+    botonesDiv.appendChild(btn);
+
+    contenidoDiv.insertAdjacentHTML("beforeend", generarPestanaMitad(i, sabor1, sabor2, tamano));
+  }
+  calcularTotal();
+}
+
+function mostrarPestanaMitad(item, index) {
+  item.querySelectorAll(".pestanas-mitad-botones button").forEach((b, i) => {
+    b.classList.toggle("activa", i === index);
+  });
+  item.querySelectorAll(".pestana-mitad-panel").forEach(p => {
+    p.classList.toggle("activa", Number(p.dataset.index) === index);
+  });
 }
 
 // ===================== DOM READY =====================
@@ -242,9 +335,17 @@ if (telefonoInput) {
       if (!cantidadInput) return;
 
       const selectTamano = itemDiv?.querySelector(".tamano-pizza");
+      const panelesMitad = itemDiv?.querySelectorAll(".tamano-mitad");
       let precio;
 
-      if (selectTamano) {
+      if (panelesMitad && panelesMitad.length > 0) {
+        let sumaMitad = 0;
+        panelesMitad.forEach(sel => {
+          sumaMitad += PRECIOS_TAMANO_MITAD[sel.value] || 0;
+        });
+        total += sumaMitad;
+        return;
+      } else if (selectTamano) {
         precio = parseInt(selectTamano.selectedOptions[0]?.dataset.precio) || 0;
       } else {
         precio = parseInt(cb.dataset.precio);
@@ -279,6 +380,21 @@ if (telefonoInput) {
         e.preventDefault();
         alert("Debes confirmar que tu pedido está correcto antes de enviar.");
         return;
+      }
+
+      const mitadCheckbox = document.querySelector('.check-plato[data-mitad-mitad="true"]');
+      if (mitadCheckbox && mitadCheckbox.checked) {
+        const itemMitad = mitadCheckbox.closest(".item");
+        const paneles = itemMitad.querySelectorAll(".pestana-mitad-panel");
+        for (const panel of paneles) {
+          const s1 = panel.querySelector(".sabor-mitad-1");
+          const s2 = panel.querySelector(".sabor-mitad-2");
+          if (s1 && s2 && s1.value === s2.value) {
+            e.preventDefault();
+            alert("En cada pizza Mitad y Mitad debes elegir dos sabores distintos.");
+            return;
+          }
+        }
       }
 
       e.preventDefault();
@@ -323,8 +439,21 @@ if (telefonoInput) {
         let nombreProducto = item.dataset.nombre || item.name || "Producto";
         let precio;
 
+        let lineaExtra = "";
+
         const selectTamano = itemDiv.querySelector(".tamano-pizza");
-        if (selectTamano) {
+        const paneles = itemDiv.querySelectorAll(".pestana-mitad-panel");
+
+        if (paneles.length > 0) {
+          precio = 0;
+          paneles.forEach((panel, idx) => {
+            const tam = panel.querySelector(".tamano-mitad")?.value || "";
+            const s1 = panel.querySelector(".sabor-mitad-1")?.value || "";
+            const s2 = panel.querySelector(".sabor-mitad-2")?.value || "";
+            precio += PRECIOS_TAMANO_MITAD[tam] || 0;
+            lineaExtra += `   ${idx + 1}) ${s1} / ${s2} - (${tam})\n`;
+          });
+        } else if (selectTamano) {
           precio = parseInt(selectTamano.selectedOptions[0]?.dataset.precio) || 0;
           nombreProducto += ` (${selectTamano.value})`;
         } else {
@@ -335,6 +464,7 @@ if (telefonoInput) {
 
         const precioTexto = precio ? " — $" + precio.toLocaleString("es-CO") : "";
 let linea = `• ${cantidad} × ${nombreProducto}${precioTexto}`;
+if (lineaExtra) linea += "\n" + lineaExtra.trimEnd();
 
         platos += linea + "\n";
       });

@@ -339,6 +339,30 @@
   </div>
 </div>
 
+  <!-- Mitad y Mitad -->
+<div class="item item-destacado">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Mitad y Mitad" value="Pizza Mitad y Mitad"
+        data-nombre="Pizza Mitad y Mitad"
+        data-mitad-mitad="true"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      🍕 Mitad y Mitad <span class="badge-especial">2 sabores</span>
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaMitadMitadCantidad" value="0" min="0"
+      onchange="calcularTotal(); actualizarPestanasMitad(this)">
+  </div>
+  <div class="descripcion" style="display:none;">
+    Elige tamaño y 2 sabores distintos para cada pizza que pidas. Si pides varias, cada una puede tener su propio tamaño y combinación.
+  </div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <div class="pestanas-mitad-botones"></div>
+    <div class="pestanas-mitad-contenido"></div>
+  </div>
+</div>
+
     <section class="menu-section">
   <h2>🍔 Hamburguesas</h2>
 
