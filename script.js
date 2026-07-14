@@ -28,6 +28,35 @@ function toggleCantidad(checkbox) {
   calcularTotal();
 }
 
+// ====== Pizzas: mostrar/ocultar selector de tamaño ======
+function togglePizzaTamano(checkbox) {
+  const item = checkbox.closest('.item');
+  if (!item) return;
+  const wrapper = item.querySelector('.tamano-pizza-wrapper');
+  const select = item.querySelector('.tamano-pizza');
+  const span = item.querySelector('.precio-pizza');
+  if (!wrapper) return;
+
+  if (checkbox.checked) {
+    wrapper.style.display = "block";
+    if (select) actualizarPrecioPizza(select);
+  } else {
+    wrapper.style.display = "none";
+    if (span) span.innerText = "Variable";
+    if (select) select.selectedIndex = 0;
+  }
+}
+
+// ====== Pizzas: actualizar precio visible según tamaño elegido ======
+function actualizarPrecioPizza(select) {
+  const item = select.closest('.item');
+  if (!item) return;
+  const span = item.querySelector('.precio-pizza');
+  const precio = parseInt(select.selectedOptions[0]?.dataset.precio) || 0;
+  if (span) span.innerText = "$" + precio.toLocaleString("es-CO");
+  calcularTotal();
+}
+
 // ===================== DOM READY =====================
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -126,6 +155,13 @@ if (telefonoInput) {
   }
   calcularTotal();
 });
+
+      cantidadInput.addEventListener("blur", () => {
+  if (cb.checked && (cantidadInput.value === "" || Number(cantidadInput.value) < 1)) {
+    cantidadInput.value = 1;
+    calcularTotal();
+  }
+});
     }
   });
 
@@ -205,14 +241,19 @@ if (telefonoInput) {
       const cantidadInput = itemDiv?.querySelector(".cantidad");
       if (!cantidadInput) return;
 
-      // 🔥 NUEVO: usar data-precio si existe
-      let precio = parseInt(cb.dataset.precio);
+      const selectTamano = itemDiv?.querySelector(".tamano-pizza");
+      let precio;
 
-      // fallback por si algún producto no tiene data-precio
-      if (!precio) {
-        const precioSpan = itemDiv?.querySelector("span");
-        let precioText = precioSpan?.innerText || "";
-        precio = parseInt(precioText.replace(/\$|,/g, '').replace(/\./g,'')) || 0;
+      if (selectTamano) {
+        precio = parseInt(selectTamano.selectedOptions[0]?.dataset.precio) || 0;
+      } else {
+        precio = parseInt(cb.dataset.precio);
+
+        if (!precio) {
+          const precioSpan = itemDiv?.querySelector("span");
+          let precioText = precioSpan?.innerText || "";
+          precio = parseInt(precioText.replace(/\$|,/g, '').replace(/\./g,'')) || 0;
+        }
       }
 
       total += precio * Number(cantidadInput.value);
@@ -279,11 +320,18 @@ if (telefonoInput) {
         if (!cantidadInput) return;
 
         const cantidad = Number(cantidadInput.value);
-        const nombreProducto = item.dataset.nombre || item.name || "Producto";
-        const itemDiv2 = item.closest(".item");
-const spanPrecio = itemDiv2?.querySelector("span");
-const precioTextoRaw = spanPrecio?.innerText || spanPrecio?.textContent || "";
-const precio = parseInt(precioTextoRaw.replace(/\$|\./g, '').replace(/,/g, '')) || 0;
+        let nombreProducto = item.dataset.nombre || item.name || "Producto";
+        let precio;
+
+        const selectTamano = itemDiv.querySelector(".tamano-pizza");
+        if (selectTamano) {
+          precio = parseInt(selectTamano.selectedOptions[0]?.dataset.precio) || 0;
+          nombreProducto += ` (${selectTamano.value})`;
+        } else {
+          const spanPrecio = itemDiv.querySelector("span");
+          const precioTextoRaw = spanPrecio?.innerText || spanPrecio?.textContent || "";
+          precio = parseInt(precioTextoRaw.replace(/\$|\./g, '').replace(/,/g, '')) || 0;
+        }
 
         const precioTexto = precio ? " — $" + precio.toLocaleString("es-CO") : "";
 let linea = `• ${cantidad} × ${nombreProducto}${precioTexto}`;
@@ -343,7 +391,7 @@ if (efectivo && efectivo.trim()) {
   if (devuelta >= 0) mensaje += "↩️ *Devuelta:* $" + devuelta.toLocaleString("es-CO") + "\n";
 }
 
-if (extra && extra.trim()) mensaje += "\n📝 *Extras:*\n" + extra + "\n";
+if (extra && extra.trim()) mensaje += "\n\n-----------------------------\n📝 *Extras:*\n" + extra + "\n-----------------------------\n";
 
   try {
 

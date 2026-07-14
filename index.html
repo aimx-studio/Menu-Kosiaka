@@ -14,6 +14,331 @@
     </div>
         <h1>Menu Kosiaka</h1>
     
+    <!-- ==================== PIZZAS ==================== -->
+<h2 class="titulo-seccion">🍕 Pizzas</h2>
+
+<!-- Napolitana -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Napolitana" value="Pizza Napolitana"
+        data-nombre="Pizza Napolitana"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Napolitana
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaNapolitanaCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Peperoni -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Peperoni" value="Pizza Peperoni"
+        data-nombre="Pizza Peperoni"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Peperoni
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaPeperoniCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, peperoni y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Hawaiiana -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Hawaiiana" value="Pizza Hawaiiana"
+        data-nombre="Pizza Hawaiiana"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Hawaiiana
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaHawaiianaCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, piña, jamón y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Pollo con champiñones -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Pollo Champinones" value="Pizza Pollo Champiñones"
+        data-nombre="Pizza Pollo con Champiñones"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Pollo con champiñones
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaPolloChampinonesCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, pollo, champiñones y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Carnes -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Carnes" value="Pizza Carnes"
+        data-nombre="Pizza Carnes"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Carnes
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaCarnesCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, pollo, salami, peperoni, chorizo y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Ranchera -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Ranchera" value="Pizza Ranchera"
+        data-nombre="Pizza Ranchera"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Ranchera
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaRancheraCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, ranchera, chorizo, maicitos y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Mexicana -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Mexicana" value="Pizza Mexicana"
+        data-nombre="Pizza Mexicana"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Mexicana
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaMexicanaCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, tocineta, maicito, guacamole, queso, jalapeño y nachos.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Vegetales -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Vegetales" value="Pizza Vegetales"
+        data-nombre="Pizza Vegetales"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Vegetales
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaVegetalesCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, champiñones, tomate, cebolla, pimentón, maicitos y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Paisa -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Paisa" value="Pizza Paisa"
+        data-nombre="Pizza Paisa"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Paisa
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaPaisaCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, chorizo, maicito, chicharrón, guacamole y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Queso y tocineta -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Queso Tocineta" value="Pizza Queso y Tocineta"
+        data-nombre="Pizza Queso y Tocineta"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Queso y tocineta
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaQuesoTocinetaCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, mucho queso y mucha tocineta.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Pollo BBQ -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Pollo BBQ" value="Pizza Pollo BBQ"
+        data-nombre="Pizza Pollo BBQ"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Pollo BBQ
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaPolloBBQCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, pollo, bbq y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Kosiaka -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Kosiaka" value="Pizza Kosiaka"
+        data-nombre="Pizza Kosiaka"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Kosiaka
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaKosiakaCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, jamón, salami, pepperoni, pollo, chorizo, tocineta, tomate fresco, cebolla, maíz tierno y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Crispetas de pollo -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Crispetas Pollo" value="Pizza Crispetas de Pollo"
+        data-nombre="Pizza Crispetas de Pollo"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Crispetas de pollo
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaCrispetasPolloCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, crispetas de pollo, bbq y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Teriyaki -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Teriyaki" value="Pizza Teriyaki"
+        data-nombre="Pizza Teriyaki"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Teriyaki
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaTeriyakiCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, pollo, queso crema y salsa teriyaki.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="33000">Media (6 porciones) — $33.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
     <section class="menu-section">
   <h2>🍔 Hamburguesas</h2>
 
