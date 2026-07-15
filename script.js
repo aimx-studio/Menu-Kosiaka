@@ -236,6 +236,14 @@ if (telefonoInput) {
   telefonoInput.addEventListener("blur", buscarDireccionAnterior);
 }
 
+  // ===================== Deshabilitar sección de Pizzas (temporal) =====================
+  document.querySelectorAll('.check-plato[name^="Pizza "]').forEach(cb => {
+    cb.checked = false;
+    cb.disabled = true;
+    const item = cb.closest(".item");
+    if (item) item.classList.add("item-no-disponible");
+  });
+
   // ===================== Inicializar checkboxes =====================
   checkboxes.forEach(cb => {
     const cantidadInput = cb.closest(".item")?.querySelector(".cantidad");
