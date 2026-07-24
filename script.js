@@ -12,6 +12,7 @@ function toggleCantidad(checkbox) {
 
   const cantidad = item.querySelector('.cantidad');
   const descripcion = item.querySelector('.descripcion');
+  const lecheritaWrapper = item.querySelector('.lecherita-wrapper');
 
   if (!cantidad) return;
 
@@ -19,10 +20,14 @@ function toggleCantidad(checkbox) {
     cantidad.disabled = false;
     if (Number(cantidad.value) === 0) cantidad.value = 1;
     if (descripcion) descripcion.style.display = "block";
+    if (lecheritaWrapper) lecheritaWrapper.style.display = "block";
   } else {
     cantidad.disabled = true;
     cantidad.value = 0;
     if (descripcion) descripcion.style.display = "none";
+    if (lecheritaWrapper) lecheritaWrapper.style.display = "none";
+    const lecheritaCb = item.querySelector('.lecherita-item');
+    if (lecheritaCb) lecheritaCb.checked = false;
   }
 
   calcularTotal();
@@ -70,8 +75,35 @@ function actualizarPrecioPizza(select) {
 const SABORES_PIZZA = [
   "Napolitana","Peperoni","Hawaiiana","Pollo con Champiñones","Carnes",
   "Ranchera","Mexicana","Vegetales","Paisa","Queso y Tocineta",
-  "Pollo BBQ","Kosiaka","Crispetas de Pollo","Teriyaki"
+  "Pollo BBQ","Teriyaki"
 ];
+
+const SABORES_PROMOCION = [
+  "Napolitana","Peperoni","Hawaiiana","Ranchera","Vegetales","Paisa"
+];
+
+function opcionesPromo(seleccionado) {
+  return SABORES_PROMOCION.map(s =>
+    `<option value="${s}" ${s === seleccionado ? "selected" : ""}>${s}</option>`
+  ).join("");
+}
+
+function togglePromoSabores(checkbox) {
+  const item = checkbox.closest('.item');
+  if (!item) return;
+  const wrapper = item.querySelector('.promo-sabores-wrapper');
+  const sel1 = item.querySelector('.promo-sabor-1');
+  const sel2 = item.querySelector('.promo-sabor-2');
+  if (!wrapper) return;
+
+  if (checkbox.checked) {
+    wrapper.style.display = "block";
+    if (sel1 && !sel1.innerHTML) sel1.innerHTML = opcionesPromo(SABORES_PROMOCION[0]);
+    if (sel2 && !sel2.innerHTML) sel2.innerHTML = opcionesPromo(SABORES_PROMOCION[1]);
+  } else {
+    wrapper.style.display = "none";
+  }
+}
 
 function opcionesSabores(seleccionado) {
   return SABORES_PIZZA.map(s =>
@@ -79,7 +111,7 @@ function opcionesSabores(seleccionado) {
   ).join("");
 }
 
-const PRECIOS_TAMANO_MITAD = { Personal: 23000, Media: 33000, Grande: 45000 };
+const PRECIOS_TAMANO_MITAD = { Personal: 23000, Media: 35000, Grande: 45000 };
 
 function opcionesTamano(seleccionado) {
   return Object.keys(PRECIOS_TAMANO_MITAD).map(t =>
@@ -236,12 +268,31 @@ if (telefonoInput) {
   telefonoInput.addEventListener("blur", buscarDireccionAnterior);
 }
 
-  // ===================== Deshabilitar sección de Pizzas (temporal) =====================
-  document.querySelectorAll('.check-plato[name^="Pizza "]').forEach(cb => {
-    cb.checked = false;
-    cb.disabled = true;
-    const item = cb.closest(".item");
-    if (item) item.classList.add("item-no-disponible");
+  // ===================== Insertar checkbox de lecherita en cada pizza =====================
+  document.querySelectorAll('.check-plato').forEach(cb => {
+    const esPizza = cb.name && cb.name.startsWith("Pizza ");
+    const esPromo = cb.name === "Promocion Pizzas";
+    if (!esPizza && !esPromo) return;
+
+    const item = cb.closest('.item');
+    if (!item || item.querySelector('.lecherita-wrapper')) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'lecherita-wrapper';
+    wrapper.style.display = 'none';
+    wrapper.style.marginTop = '4px';
+    wrapper.innerHTML = `
+      <label style="font-size:14px; display:flex; align-items:center; gap:6px;">
+        <input type="checkbox" class="lecherita-item"> 🥛 ¿Deseas lecherita? (Gratis)
+      </label>
+    `;
+
+    const descripcion = item.querySelector('.descripcion');
+    if (descripcion) {
+      descripcion.insertAdjacentElement('afterend', wrapper);
+    } else {
+      item.appendChild(wrapper);
+    }
   });
 
   // ===================== Inicializar checkboxes =====================
@@ -405,6 +456,18 @@ if (telefonoInput) {
         }
       }
 
+      const promoCheckbox = document.querySelector('.check-plato[data-promo="true"]');
+      if (promoCheckbox && promoCheckbox.checked) {
+        const itemPromo = promoCheckbox.closest(".item");
+        const p1 = itemPromo.querySelector(".promo-sabor-1");
+        const p2 = itemPromo.querySelector(".promo-sabor-2");
+        if (p1 && p2 && p1.value === p2.value) {
+          e.preventDefault();
+          alert("En la promoción debes elegir dos sabores distintos para cada pizza.");
+          return;
+        }
+      }
+
       e.preventDefault();
       const ahora = Date.now();
 
@@ -451,6 +514,8 @@ if (telefonoInput) {
 
         const selectTamano = itemDiv.querySelector(".tamano-pizza");
         const paneles = itemDiv.querySelectorAll(".pestana-mitad-panel");
+        const promoSabor1 = itemDiv.querySelector(".promo-sabor-1");
+        const promoSabor2 = itemDiv.querySelector(".promo-sabor-2");
 
         if (paneles.length > 0) {
           precio = 0;
@@ -461,6 +526,9 @@ if (telefonoInput) {
             precio += PRECIOS_TAMANO_MITAD[tam] || 0;
             lineaExtra += `   ${idx + 1}) ${s1} / ${s2} - (${tam})\n`;
           });
+        } else if (promoSabor1 && promoSabor2) {
+          precio = parseInt(item.dataset.precio) || 0;
+          lineaExtra += `   1) ${promoSabor1.value}\n   2) ${promoSabor2.value}\n`;
         } else if (selectTamano) {
           precio = parseInt(selectTamano.selectedOptions[0]?.dataset.precio) || 0;
           nombreProducto += ` (${selectTamano.value})`;
@@ -469,6 +537,9 @@ if (telefonoInput) {
           const precioTextoRaw = spanPrecio?.innerText || spanPrecio?.textContent || "";
           precio = parseInt(precioTextoRaw.replace(/\$|\./g, '').replace(/,/g, '')) || 0;
         }
+
+        const lecheritaItem = itemDiv.querySelector('.lecherita-item')?.checked;
+        if (lecheritaItem) nombreProducto += " (Lecherita: Sí)";
 
         const precioTexto = precio ? " — $" + precio.toLocaleString("es-CO") : "";
 let linea = `• ${cantidad} × ${nombreProducto}${precioTexto}`;
@@ -517,6 +588,8 @@ if (nombre) mensaje += "👤 *Nombre:* " + nombre + "\n\n";
 
 if (platos.trim()) mensaje += "🍽️ *Platos:*\n" + platos + "\n";
 if (adicionales.trim()) mensaje += "➕ *Adicionales:*\n" + adicionales + "\n";
+
+
 
 if (totalFormatted) mensaje += "💰 *Total:* " + totalFormatted + "\n\n";
 

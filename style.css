@@ -626,22 +626,3 @@ body::before {
 .pestana-mitad-panel.activa {
   display: block;
 }
-
-.item-no-disponible {
-  opacity: 0.5;
-  pointer-events: none;
-  position: relative;
-}
-
-.item-no-disponible::after {
-  content: "No disponible";
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: #e74c3c;
-  color: #fff;
-  font-size: 11px;
-  font-weight: bold;
-  padding: 2px 8px;
-  border-radius: 10px;
-}
