@@ -119,7 +119,7 @@ function opcionesTamano(seleccionado) {
   ).join("");
 }
 
-function generarPestanaMitad(index, sabor1, sabor2, tamano) {
+function generarPestanaMitad(index, sabor1, sabor2, tamano, lecherita) {
   return `
     <div class="pestana-mitad-panel ${index === 0 ? 'activa' : ''}" data-index="${index}">
       <label style="font-size:14px; font-weight:bold; display:block;">Pizza ${index + 1} — Tamaño</label>
@@ -128,6 +128,9 @@ function generarPestanaMitad(index, sabor1, sabor2, tamano) {
       <select class="sabor-mitad-1">${opcionesSabores(sabor1)}</select>
       <label style="font-size:14px; font-weight:bold; display:block; margin-top:6px;">Pizza ${index + 1} — Sabor 2</label>
       <select class="sabor-mitad-2">${opcionesSabores(sabor2)}</select>
+      <label style="font-size:14px; display:flex; align-items:center; gap:6px; margin-top:6px;">
+        <input type="checkbox" class="lecherita-mitad" ${lecherita ? "checked" : ""}> 🥛 ¿Lecherita en esta pizza?
+      </label>
     </div>
   `;
 }
@@ -147,7 +150,8 @@ function actualizarPestanasMitad(cantidadInput) {
   const previos = Array.from(contenidoDiv.querySelectorAll(".pestana-mitad-panel")).map(p => ({
     sabor1: p.querySelector(".sabor-mitad-1")?.value,
     sabor2: p.querySelector(".sabor-mitad-2")?.value,
-    tamano: p.querySelector(".tamano-mitad")?.value
+    tamano: p.querySelector(".tamano-mitad")?.value,
+    lecherita: p.querySelector(".lecherita-mitad")?.checked
   }));
 
   botonesDiv.innerHTML = "";
@@ -160,6 +164,7 @@ function actualizarPestanasMitad(cantidadInput) {
     const sabor1 = prev?.sabor1 || SABORES_PIZZA[0];
     const sabor2 = prev?.sabor2 || SABORES_PIZZA[1];
     const tamano = prev?.tamano || "Personal";
+    const lecherita = prev?.lecherita || false;
 
     const btn = document.createElement("button");
     btn.type = "button";
@@ -168,7 +173,7 @@ function actualizarPestanasMitad(cantidadInput) {
     btn.onclick = () => mostrarPestanaMitad(item, i);
     botonesDiv.appendChild(btn);
 
-    contenidoDiv.insertAdjacentHTML("beforeend", generarPestanaMitad(i, sabor1, sabor2, tamano));
+    contenidoDiv.insertAdjacentHTML("beforeend", generarPestanaMitad(i, sabor1, sabor2, tamano, lecherita));
   }
   calcularTotal();
 }
@@ -273,6 +278,7 @@ if (telefonoInput) {
     const esPizza = cb.name && cb.name.startsWith("Pizza ");
     const esPromo = cb.name === "Promocion Pizzas";
     if (!esPizza && !esPromo) return;
+    if (cb.dataset.mitadMitad === "true" || esPromo) return;
 
     const item = cb.closest('.item');
     if (!item || item.querySelector('.lecherita-wrapper')) return;
@@ -523,12 +529,16 @@ if (telefonoInput) {
             const tam = panel.querySelector(".tamano-mitad")?.value || "";
             const s1 = panel.querySelector(".sabor-mitad-1")?.value || "";
             const s2 = panel.querySelector(".sabor-mitad-2")?.value || "";
+            const lech = panel.querySelector(".lecherita-mitad")?.checked;
             precio += PRECIOS_TAMANO_MITAD[tam] || 0;
-            lineaExtra += `   ${idx + 1}) ${s1} / ${s2} - (${tam})\n`;
+            lineaExtra += `   ${idx + 1}) ${s1} / ${s2} - (${tam})${lech ? " 🥛 Lecherita: Sí" : ""}\n`;
           });
         } else if (promoSabor1 && promoSabor2) {
           precio = parseInt(item.dataset.precio) || 0;
-          lineaExtra += `   1) ${promoSabor1.value}\n   2) ${promoSabor2.value}\n`;
+          const lechP1 = itemDiv.querySelector(".lecherita-promo-1")?.checked;
+          const lechP2 = itemDiv.querySelector(".lecherita-promo-2")?.checked;
+          lineaExtra += `   1) ${promoSabor1.value}${lechP1 ? " 🥛 Lecherita: Sí" : ""}\n`;
+          lineaExtra += `   2) ${promoSabor2.value}${lechP2 ? " 🥛 Lecherita: Sí" : ""}\n`;
         } else if (selectTamano) {
           precio = parseInt(selectTamano.selectedOptions[0]?.dataset.precio) || 0;
           nombreProducto += ` (${selectTamano.value})`;
