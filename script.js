@@ -494,6 +494,7 @@ if (telefonoInput) {
       }
 
       const nombre = document.getElementById("nombre")?.value;
+      const usuarioWhatsapp = document.getElementById("usuarioWhatsapp")?.value;
       const telefono = document.getElementById("telefono")?.value;
       const direccion = direccionInput?.value;
       const metodoEntrega = tipoEntrega?.value;
@@ -594,7 +595,9 @@ if (metodoEntrega === "domicilio" && direccion && direccion.trim()) {
 
 mensaje += "\n";
 if (telefono) mensaje += "📞 *Número:* " + telefono + "\n";
-if (nombre) mensaje += "👤 *Nombre:* " + nombre + "\n\n";
+if (nombre) mensaje += "👤 *Nombre:* " + nombre + "\n";
+if (usuarioWhatsapp && usuarioWhatsapp.trim()) mensaje += "📱 *Usuario WhatsApp:* " + usuarioWhatsapp.trim() + "\n";
+mensaje += "\n";
 
 if (platos.trim()) mensaje += "🍽️ *Platos:*\n" + platos + "\n";
 if (adicionales.trim()) mensaje += "➕ *Adicionales:*\n" + adicionales + "\n";

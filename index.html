@@ -2481,26 +2481,7 @@ onchange="toggleCantidad(this)"> Milo</label>
     </div>
   </div>
 
-  <!-- Antojo -->
-  <div class="item">
-    <div class="item-linea">
-      <label>
-        <input type="checkbox" class="check-plato"
-          name="Antojo"
-          value="0"
-          onchange="toggleCantidad(this)">
-        Antojo
-      </label>
-      <span>$13.000</span>
-      <input type="number" class="cantidad"
-        name="AntojoCantidad"
-        value="0" min="1"
-        onchange="calcularTotal()">
-    </div>
-    <div class="descripcion" style="display:none;">
-      Dos bolas de helado con queso y barquillo.
-    </div>
-  </div>
+  
 
   <!-- Banana -->
   <div class="item">
@@ -2646,6 +2627,11 @@ onchange="toggleCantidad(this)"> Milo</label>
     <div class="form-group">
       <label for="nombre">👤 Nombre:</label>
       <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+    </div>
+
+    <div class="form-group">
+      <label for="usuarioWhatsapp">📱 Usuario de WhatsApp (opcional):</label>
+      <input type="text" id="usuarioWhatsapp" name="usuarioWhatsapp" placeholder="Ej: @tuusuario">
     </div>
 
     <div class="form-group">
