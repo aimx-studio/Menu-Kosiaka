@@ -504,6 +504,31 @@ if (telefonoInput) {
       const total = totalHiddenInput?.value;
       const especificaciones = document.getElementById("especificaciones")?.value;
 
+      // ===== Número de pedido diario (se reinicia cada día) =====
+      const hoyFecha = new Date();
+      const diaHoy = hoyFecha.getDate();
+      const mesHoy = hoyFecha.getMonth() + 1;
+      const anioHoy = hoyFecha.getFullYear();
+      const fechaHoyStr = `${diaHoy}/${mesHoy}/${anioHoy}`;
+
+      let numeroPedido = "K1";
+      try {
+        const resConteo = await fetch(
+          `${SUPABASE_URL}/rest/v1/pedidos?select=id&Fecha=like.${encodeURIComponent(fechaHoyStr)}*`,
+          {
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`
+            }
+          }
+        );
+        const dataConteo = await resConteo.json();
+        const totalHoy = Array.isArray(dataConteo) ? dataConteo.length : 0;
+        numeroPedido = "K" + (totalHoy + 1);
+      } catch (err) {
+        console.warn("No se pudo calcular el número de pedido:", err);
+      }
+
       // 🔥 PLATOS MEJORADO
       let platos = "";
       document.querySelectorAll(".check-plato:checked").forEach(item => {
@@ -578,6 +603,7 @@ if (lineaExtra) linea += "\n" + lineaExtra.trimEnd();
       const ahoraMensaje = new Date();
 const horaMsg = ahoraMensaje.toLocaleTimeString("es-CO", { hour: "numeric", minute: "2-digit", hour12: true });
       let mensaje = "";
+mensaje += "🔖 *" + numeroPedido + "*\n";
 if (horaMsg) mensaje += "🕐 *Hora:* " + horaMsg + "\n\n";
 
 if (metodoEntrega) {
