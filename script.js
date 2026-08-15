@@ -33,6 +33,19 @@ function toggleCantidad(checkbox) {
   calcularTotal();
 }
 
+// ====== Donación: mostrar/ocultar campo de nombre ======
+function toggleDonacionNombre(checkbox) {
+  const item = checkbox.closest('.item');
+  if (!item) return;
+  const wrapper = item.querySelector('.donacion-nombre-wrapper');
+  if (!wrapper) return;
+  wrapper.style.display = checkbox.checked ? "block" : "none";
+  if (!checkbox.checked) {
+    const input = wrapper.querySelector('input');
+    if (input) input.value = "";
+  }
+}
+
 // ====== Pizzas: mostrar/ocultar selector de tamaño ======
 function togglePizzaTamano(checkbox) {
   const item = checkbox.closest('.item');
@@ -532,6 +545,8 @@ if (telefonoInput) {
       // 🔥 PLATOS MEJORADO
       let platos = "";
       document.querySelectorAll(".check-plato:checked").forEach(item => {
+        if (item.dataset.donacion === "true") return;
+
         const itemDiv = item.closest(".item");
         if (!itemDiv) return;
 
@@ -639,6 +654,15 @@ if (efectivo && efectivo.trim()) {
   const devuelta = pagoNum - totalNum;
   mensaje += "💵 *Paga con:* $" + pagoNum.toLocaleString("es-CO") + "\n";
   if (devuelta >= 0) mensaje += "↩️ *Devuelta:* $" + devuelta.toLocaleString("es-CO") + "\n";
+}
+
+const donacionCheckbox = document.querySelector('.check-plato[data-donacion="true"]');
+if (donacionCheckbox && donacionCheckbox.checked) {
+  const donacionItem = donacionCheckbox.closest(".item");
+  const donacionCantidad = Number(donacionItem?.querySelector(".cantidad")?.value) || 0;
+  const donacionMonto = donacionCantidad * 2000;
+  const donacionNombre = document.getElementById("donacionNombre")?.value?.trim();
+  mensaje += "\n🎗️ *Donación a nombre de:* " + (donacionNombre || "Anónimo") + " — $" + donacionMonto.toLocaleString("es-CO") + "\n";
 }
 
 if (extra && extra.trim()) mensaje += "\n\n-----------------------------\n📝 *Extras:*\n" + extra + "\n-----------------------------\n";

@@ -626,3 +626,12 @@ body::before {
 .pestana-mitad-panel.activa {
   display: block;
 }
+
+/* ==================== Donación ==================== */
+.item-donacion {
+  border: 1.5px solid #f5c56b;
+  background: #fffaf0;
+  border-radius: 10px;
+  padding: 10px 8px;
+  margin-bottom: 10px;
+}

@@ -2624,6 +2624,32 @@ onchange="toggleCantidad(this)"> Milo</label>
   <section class="menu-section">
     <h2>📝 Detalles del Cliente</h2>
 
+    <div class="item item-donacion">
+      <div class="item-linea">
+        <label>
+          <input type="checkbox" class="check-plato"
+            name="Donacion Terremoto" value="Donación Terremoto"
+            data-nombre="Donación Terremoto"
+            data-precio="2000"
+            data-donacion="true"
+            onchange="toggleCantidad(this); toggleDonacionNombre(this)">
+          🎗️ Donación para víctimas del terremoto
+        </label>
+        <span>$2.000</span>
+        <input type="number" class="cantidad" name="DonacionTerremotoCantidad" value="0" min="0" onchange="calcularTotal()">
+      </div>
+      <div class="descripcion" style="display:none;">
+        Cada unidad equivale a $2.000. Dona la cantidad que quieras — totalmente opcional.
+      </div>
+      <div class="donacion-nombre-wrapper" style="display:none;">
+        <label for="donacionNombre" style="font-size:14px; font-weight:bold; display:block; margin-top:6px;">
+          Nombre para publicar en redes (opcional)
+        </label>
+        <input type="text" id="donacionNombre" name="donacionNombre" placeholder="Ej: Familia Pérez"
+          style="width:100%; padding:8px; border-radius:6px; border:1px solid #ccc; margin-top:4px; box-sizing:border-box;">
+      </div>
+    </div>
+
     <div class="form-group">
       <label for="nombre">👤 Nombre:</label>
       <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
