@@ -407,6 +407,7 @@ if (telefonoInput) {
 
     checkboxes.forEach(cb => {
       if (!cb.checked) return;
+      if (cb.dataset.donacion === "true") return;
 
       const itemDiv = cb.closest(".item");
       const cantidadInput = itemDiv?.querySelector(".cantidad");
