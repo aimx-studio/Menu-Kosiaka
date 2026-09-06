@@ -505,29 +505,36 @@ if (telefonoInput) {
       const total = totalHiddenInput?.value;
       const especificaciones = document.getElementById("especificaciones")?.value;
 
-      // ===== Número de pedido diario (se reinicia cada día) =====
+      // ===== Número de pedido diario (contador atómico en Supabase, se reinicia cada día) =====
       const hoyFecha = new Date();
       const diaHoy = hoyFecha.getDate();
       const mesHoy = hoyFecha.getMonth() + 1;
       const anioHoy = hoyFecha.getFullYear();
-      const fechaHoyStr = `${diaHoy}/${mesHoy}/${anioHoy}`;
+      const fechaISO = `${anioHoy}-${String(mesHoy).padStart(2, '0')}-${String(diaHoy).padStart(2, '0')}`;
 
-      let numeroPedido = "K1";
-      try {
-        const resConteo = await fetch(
-          `${SUPABASE_URL}/rest/v1/pedidos?select=id&Fecha=like.${encodeURIComponent(fechaHoyStr)}*`,
-          {
+      let numeroPedido = null;
+      for (let intento = 0; intento < 3 && numeroPedido === null; intento++) {
+        try {
+          const resRpc = await fetch(`${SUPABASE_URL}/rest/v1/rpc/obtener_siguiente_pedido`, {
+            method: "POST",
             headers: {
               "apikey": SUPABASE_KEY,
-              "Authorization": `Bearer ${SUPABASE_KEY}`
-            }
+              "Authorization": `Bearer ${SUPABASE_KEY}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ fecha_input: fechaISO })
+          });
+          if (resRpc.ok) {
+            const valor = await resRpc.json();
+            numeroPedido = "K" + valor;
           }
-        );
-        const dataConteo = await resConteo.json();
-        const totalHoy = Array.isArray(dataConteo) ? dataConteo.length : 0;
-        numeroPedido = "K" + (totalHoy + 1);
-      } catch (err) {
-        console.warn("No se pudo calcular el número de pedido:", err);
+        } catch (err) {
+          console.warn(`Intento ${intento + 1} fallido al obtener número de pedido:`, err);
+        }
+      }
+
+      if (numeroPedido === null) {
+        numeroPedido = "K-" + String(hoyFecha.getHours()).padStart(2, '0') + String(hoyFecha.getMinutes()).padStart(2, '0');
       }
 
       // 🔥 PLATOS MEJORADO
