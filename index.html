@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Kosiaka</title>
+    <link rel="icon" type="image/jpeg" href="logo-kosiaka.jpg">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +16,16 @@
         <h1>Menu Kosiaka</h1>
     
     <!-- ==================== PIZZAS ==================== -->
-<h2 class="titulo-seccion">🍕 Pizzas</h2>
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkPizzas" class="check-toggle" onchange="toggleSeccion('pizzas')">
+    <label for="checkPizzas" class="titulo-seccion">
+        🍕 Pizzas
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="pizzas" class="seccion-desplegable" style="display:none;">
 
 <!-- Napolitana -->
 <div class="item">
@@ -367,8 +377,18 @@
   </div>
 </div>
 
-    <section class="menu-section">
-  <h2>🍔 Hamburguesas</h2>
+    </div> <!-- cierre de #pizzas -->
+
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkHamburguesas" class="check-toggle" onchange="toggleSeccion('hamburguesas')">
+    <label for="checkHamburguesas" class="titulo-seccion">
+        🍔 Hamburguesas
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="hamburguesas" class="seccion-desplegable" style="display:none;">
 
   <!-- Apenas es -->
 <div class="item">
@@ -683,8 +703,18 @@
     Hamburguesa artesanal con papitas y gaseosa mini.
   </div>
 </div>
-<!-- ==================== SALCHIPAPAS ==================== -->
-<h2 class="titulo-seccion">🍟 SALCHIPAPAS</h2>
+</div> <!-- cierre de #hamburguesas -->
+
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkSalchipapas" class="check-toggle" onchange="toggleSeccion('salchipapas')">
+    <label for="checkSalchipapas" class="titulo-seccion">
+        🍟 Salchipapas
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="salchipapas" class="seccion-desplegable" style="display:none;">
 
 <!-- Salchipapita -->
 <div class="item">
@@ -833,8 +863,18 @@
   </div>
 </div>
 
-<section class="categoria">
-  <h2>🍟 Papas Especiales</h2>
+</div> <!-- cierre de #salchipapas -->
+
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkPapasEspeciales" class="check-toggle" onchange="toggleSeccion('papasEspeciales')">
+    <label for="checkPapasEspeciales" class="titulo-seccion">
+        🍟 Papas Especiales
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="papasEspeciales" class="seccion-desplegable" style="display:none;">
 
   <!-- Pollo -->
   <div class="item">
@@ -1004,10 +1044,18 @@
       Papas a la francesa, carne desmechada, guacamole y sour cream.
     </div>
   </div>
-</section>
+</div> <!-- cierre de #papasEspeciales (incluye Parranderas, ya fusionado) -->
 
-<section class="categoria">
-  <h2>🌭 Perros</h2>
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkPerros" class="check-toggle" onchange="toggleSeccion('perros')">
+    <label for="checkPerros" class="titulo-seccion">
+        🌭 Perros
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="perros" class="seccion-desplegable" style="display:none;">
 
   <!-- Cachorro -->
   <div class="item">
@@ -1155,8 +1203,18 @@
       tocineta, queso y cebolla (opcional).
     </div>
   </div>
+</div> <!-- cierre de #perros -->
 
-  <h2>🔥 Perras</h2>
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkPerras" class="check-toggle" onchange="toggleSeccion('perras')">
+    <label for="checkPerras" class="titulo-seccion">
+        🔥 Perras
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="perras" class="seccion-desplegable" style="display:none;">
 
   <!-- Perrita -->
   <div class="item">
@@ -1221,10 +1279,18 @@
       mucha tocineta y mucho queso.
     </div>
   </div>
-</section>
+</div> <!-- cierre de #perras -->
 
-<section class="categoria">
-  <h2>🥪 Cubanos</h2>
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkCubanos" class="check-toggle" onchange="toggleSeccion('cubanos')">
+    <label for="checkCubanos" class="titulo-seccion">
+        🥪 Cubanos
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="cubanos" class="seccion-desplegable" style="display:none;">
 
   <!-- Sencillo -->
   <div class="item">
@@ -1289,10 +1355,18 @@
       tocineta, queso y salsa de ajo.
     </div>
   </div>
-</section>
+</div> <!-- cierre de #cubanos -->
 
-<section class="categoria">
-  <h2>🍢 Chuzos</h2>
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkChuzos" class="check-toggle" onchange="toggleSeccion('chuzos')">
+    <label for="checkChuzos" class="titulo-seccion">
+        🍢 Chuzos
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="chuzos" class="seccion-desplegable" style="display:none;">
 
   <!-- Junior -->
   <div class="item">
@@ -1358,10 +1432,18 @@
       arepa con queso, tocineta y ensalada.
     </div>
   </div>
-</section>
+</div> <!-- cierre de #chuzos -->
 
-  <section class="categoria">
-  <h2>🥘 Picadas</h2>
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkPicadas" class="check-toggle" onchange="toggleSeccion('picadas')">
+    <label for="checkPicadas" class="titulo-seccion">
+        🥘 Picadas
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="picadas" class="seccion-desplegable" style="display:none;">
 
   <!-- Personal -->
   <div class="item">
@@ -1428,8 +1510,18 @@
       cañón, chorizo, huevitos, arepas con queso y ensalada.
     </div>
   </div>
+</div> <!-- cierre de #picadas -->
 
-  <h2>🥩 Carnes</h2>
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkCarnes" class="check-toggle" onchange="toggleSeccion('carnesSeccion')">
+    <label for="checkCarnes" class="titulo-seccion">
+        🥩 Carnes
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="carnesSeccion" class="seccion-desplegable" style="display:none;">
 
   <!-- Pechuga -->
   <div class="item">
@@ -1474,10 +1566,18 @@
       papas a la francesa, arepa con queso y ensalada.
     </div>
   </div>
-</section>
+</div> <!-- cierre de #carnesSeccion -->
 
-<section class="categoria">
-  <h2>🍴 Otras Delicias</h2>
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkOtrasDelicias" class="check-toggle" onchange="toggleSeccion('otrasDelicias')">
+    <label for="checkOtrasDelicias" class="titulo-seccion">
+        🍴 Otras Delicias
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="otrasDelicias" class="seccion-desplegable" style="display:none;">
 
   <!-- Arepa con todo -->
   <div class="item">
@@ -1611,7 +1711,7 @@
       maicitos y salsas.
     </div>
   </div>
-</section>
+</div> <!-- cierre de #otrasDelicias -->
 
 <!-- BOTÓN ADICIONES -->
 
@@ -2257,10 +2357,18 @@ onchange="toggleCantidad(this)"> Milo</label>
 <input type="number" class="cantidad" value="0" min="1" onchange="calcularTotal()">
 </div></div>
 
-</div>
+</div> <!-- cierre de #bebidas (ya existente) -->
 
-  <section class="categoria">
-  <h2 style="text-align:center;">🍨 Helados</h2>
+<div class="item">
+  <div class="item-linea" style="text-align:center;">
+    <input type="checkbox" id="checkHelados" class="check-toggle" onchange="toggleSeccion('helados')">
+    <label for="checkHelados" class="titulo-seccion">
+        🍨 Helados
+        <span class="flecha">▼</span>
+    </label>
+  </div>
+</div>
+<div id="helados" class="seccion-desplegable" style="display:none;">
 
   <!-- Copa Euforia -->
   <div class="item">
@@ -2609,8 +2717,8 @@ onchange="toggleCantidad(this)"> Milo</label>
       crema chantilly, barquillo y cereza.
     </div>
   </div>
-  </section>
- 
+</div> <!-- cierre de #helados -->
+
   <!-- ====== FORMULARIO ======== -->
 <form id="pedidoForm">
   <section class="menu-section">
