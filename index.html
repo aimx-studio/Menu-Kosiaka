@@ -73,6 +73,52 @@
   </div>
 </div>
 
+<!-- Salami -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Salami" value="Pizza Salami"
+        data-nombre="Pizza Salami"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Salami
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaSalamiCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, salami y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="35000">Media (6 porciones) — $35.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Salami y Peperoni -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Salami Peperoni" value="Pizza Salami y Peperoni"
+        data-nombre="Pizza Salami y Peperoni"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Salami y Peperoni
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaSalamiPeperoniCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, salami, peperoni y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="35000">Media (6 porciones) — $35.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
 <!-- Hawaiiana -->
 <div class="item">
   <div class="item-linea">
@@ -110,6 +156,29 @@
     <input type="number" class="cantidad" name="PizzaPolloChampinonesCantidad" value="0" min="0" onchange="calcularTotal()">
   </div>
   <div class="descripcion" style="display:none;">Base napolitana, pollo, champiñones y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="35000">Media (6 porciones) — $35.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
+<!-- Jamón y Queso -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Jamon Queso" value="Pizza Jamón y Queso"
+        data-nombre="Pizza Jamón y Queso"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Jamón y Queso
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaJamonQuesoCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, jamón y queso.</div>
   <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
     <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
       <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
@@ -596,6 +665,13 @@
   </div>
   <div class="descripcion" style="display:none;">
     Pan, pechuga de pollo, tomate, lechuga, queso, tocineta y papas.
+  </div>
+  <div class="opciones-extra-wrapper opciones-bebida" style="display:none;">
+    <label style="font-size:14px; font-weight:bold; display:block;">¿Desea la pechuga apanada?</label>
+    <select class="opcion-extra" data-pregunta="Pechuga apanada">
+      <option value="No">No</option>
+      <option value="Sí">Sí</option>
+    </select>
   </div>
 </div>
 
@@ -1598,6 +1674,13 @@
     <div class="descripcion" style="display:none;">
       Arepa gruesa frita, carne y pollo desmechado,
       maicitos y queso.
+    </div>
+    <div class="opciones-extra-wrapper opciones-bebida" style="display:none;">
+      <label style="font-size:14px; font-weight:bold; display:block;">¿Desea en vez de maicitos, tocineta?</label>
+      <select class="opcion-extra" data-pregunta="Tocineta en vez de maicitos">
+        <option value="No">No</option>
+        <option value="Sí">Sí</option>
+      </select>
     </div>
   </div>
 

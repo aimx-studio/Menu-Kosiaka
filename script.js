@@ -13,6 +13,7 @@ function toggleCantidad(checkbox) {
   const cantidad = item.querySelector('.cantidad');
   const descripcion = item.querySelector('.descripcion');
   const lecheritaWrapper = item.querySelector('.lecherita-wrapper');
+  const extraWrapper = item.querySelector('.opciones-extra-wrapper');
 
   if (!cantidad) return;
 
@@ -21,11 +22,13 @@ function toggleCantidad(checkbox) {
     if (Number(cantidad.value) === 0) cantidad.value = 1;
     if (descripcion) descripcion.style.display = "block";
     if (lecheritaWrapper) lecheritaWrapper.style.display = "block";
+    if (extraWrapper) extraWrapper.style.display = "block";
   } else {
     cantidad.disabled = true;
     cantidad.value = 0;
     if (descripcion) descripcion.style.display = "none";
     if (lecheritaWrapper) lecheritaWrapper.style.display = "none";
+    if (extraWrapper) extraWrapper.style.display = "none";
     const lecheritaCb = item.querySelector('.lecherita-item');
     if (lecheritaCb) lecheritaCb.checked = false;
   }
@@ -76,11 +79,12 @@ function actualizarPrecioPizza(select) {
 const SABORES_PIZZA = [
   "Napolitana","Peperoni","Hawaiiana","Pollo con Champiñones","Carnes",
   "Ranchera","Mexicana","Vegetales","Paisa","Queso y Tocineta",
-  "Pollo BBQ","Teriyaki"
+  "Pollo BBQ","Teriyaki","Jamón y Queso"
 ];
 
 const SABORES_PROMOCION = [
-  "Napolitana","Peperoni","Hawaiiana","Ranchera","Vegetales","Paisa"
+  "Napolitana","Peperoni","Hawaiiana","Ranchera","Vegetales","Paisa",
+  "Salami","Salami y Peperoni","Pollo con Champiñones","Jamón y Queso"
 ];
 
 function opcionesPromo(seleccionado) {
@@ -584,6 +588,12 @@ if (telefonoInput) {
 
         const lecheritaItem = itemDiv.querySelector('.lecherita-item')?.checked;
         if (lecheritaItem) nombreProducto += " (Lecherita: Sí)";
+
+        const extraSelect = itemDiv.querySelector('.opcion-extra');
+        if (extraSelect) {
+          const preguntaExtra = extraSelect.dataset.pregunta || "Opción";
+          nombreProducto += ` (${preguntaExtra}: ${extraSelect.value})`;
+        }
 
         const precioTexto = precio ? " — $" + precio.toLocaleString("es-CO") : "";
 let linea = `• ${cantidad} × ${nombreProducto}${precioTexto}`;
