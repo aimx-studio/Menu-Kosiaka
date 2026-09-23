@@ -31,6 +31,8 @@ function toggleCantidad(checkbox) {
     if (extraWrapper) extraWrapper.style.display = "none";
     const lecheritaCb = item.querySelector('.lecherita-item');
     if (lecheritaCb) lecheritaCb.checked = false;
+    const extraCb = item.querySelector('.opcion-extra-item');
+    if (extraCb) extraCb.checked = false;
   }
 
   calcularTotal();
@@ -589,10 +591,10 @@ if (telefonoInput) {
         const lecheritaItem = itemDiv.querySelector('.lecherita-item')?.checked;
         if (lecheritaItem) nombreProducto += " (Lecherita: Sí)";
 
-        const extraSelect = itemDiv.querySelector('.opcion-extra');
-        if (extraSelect) {
-          const preguntaExtra = extraSelect.dataset.pregunta || "Opción";
-          nombreProducto += ` (${preguntaExtra}: ${extraSelect.value})`;
+        const extraCheckbox = itemDiv.querySelector('.opcion-extra-item');
+        if (extraCheckbox && extraCheckbox.checked) {
+          const textoExtra = extraCheckbox.dataset.texto || "Sí";
+          nombreProducto += ` (${textoExtra})`;
         }
 
         const precioTexto = precio ? " — $" + precio.toLocaleString("es-CO") : "";
