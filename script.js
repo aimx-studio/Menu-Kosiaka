@@ -118,12 +118,13 @@ function opcionesSabores(seleccionado) {
   ).join("");
 }
 
-const PRECIOS_TAMANO_MITAD = { Personal: 23000, Media: 35000, Grande: 45000 };
+const PRECIOS_TAMANO_MITAD = { Personal: 23000, Media: 25000, "Media 2.0": 35000, Grande: 45000 };
 
 function opcionesTamano(seleccionado) {
-  return Object.keys(PRECIOS_TAMANO_MITAD).map(t =>
-    `<option value="${t}" ${t === seleccionado ? "selected" : ""}>${t} — $${PRECIOS_TAMANO_MITAD[t].toLocaleString("es-CO")}</option>`
-  ).join("");
+  return Object.keys(PRECIOS_TAMANO_MITAD).map(t => {
+    const etiqueta = t === "Media 2.0" ? `${t} (más ingredientes)` : t;
+    return `<option value="${t}" ${t === seleccionado ? "selected" : ""}>${etiqueta} — $${PRECIOS_TAMANO_MITAD[t].toLocaleString("es-CO")}</option>`;
+  }).join("");
 }
 
 function generarPestanaMitad(index, sabor1, sabor2, tamano, lecherita) {
