@@ -79,14 +79,14 @@ function actualizarPrecioPizza(select) {
 }
 
 const SABORES_PIZZA = [
-  "Napolitana","Peperoni","Hawaiiana","Pollo con Champiñones","Carnes",
+  "Napolitana","Peperoni","Hawaiiana","Carnes",
   "Ranchera","Mexicana","Vegetales","Paisa","Queso y Tocineta",
   "Pollo BBQ","Teriyaki","Jamón y Queso"
 ];
 
 const SABORES_PROMOCION = [
   "Napolitana","Peperoni","Hawaiiana","Ranchera","Vegetales","Paisa",
-  "Salami","Salami y Peperoni","Pollo con Champiñones","Jamón y Queso"
+  "Salami","Salami y Peperoni","Jamón y Queso"
 ];
 
 function opcionesPromo(seleccionado) {
