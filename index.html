@@ -154,6 +154,29 @@
 
 
 
+<!-- Pollo con champiñones -->
+<div class="item">
+  <div class="item-linea">
+    <label>
+      <input type="checkbox" class="check-plato"
+        name="Pizza Pollo Champinones" value="Pizza Pollo Champiñones"
+        data-nombre="Pizza Pollo con Champiñones"
+        onchange="toggleCantidad(this); togglePizzaTamano(this)">
+      Pollo con champiñones
+    </label>
+    <span class="precio-pizza">Variable</span>
+    <input type="number" class="cantidad" name="PizzaPolloChampinonesCantidad" value="0" min="0" onchange="calcularTotal()">
+  </div>
+  <div class="descripcion" style="display:none;">Base napolitana, pollo, champiñones y queso.</div>
+  <div class="opciones-bebida tamano-pizza-wrapper" style="display:none;">
+    <select class="tamano-pizza" onchange="actualizarPrecioPizza(this)">
+      <option value="Personal" data-precio="23000">Personal (4 porciones) — $23.000</option>
+      <option value="Media" data-precio="35000">Media (6 porciones) — $35.000</option>
+      <option value="Grande" data-precio="45000">Grande (8 porciones) — $45.000</option>
+    </select>
+  </div>
+</div>
+
 <!-- Jamón y Queso -->
 <div class="item">
   <div class="item-linea">
