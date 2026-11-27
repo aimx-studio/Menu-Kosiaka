@@ -89,10 +89,15 @@ const SABORES_PROMOCION = [
   "Salami","Salami y Peperoni","Pollo con Champiñones","Jamón y Queso"
 ];
 
-function opcionesPromo(seleccionado) {
-  return SABORES_PROMOCION.map(s =>
-    `<option value="${s}" ${s === seleccionado ? "selected" : ""}>${s}</option>`
-  ).join("");
+// Sabores que solo se pueden elegir como primer sabor en las promos
+const SABORES_SOLO_PRIMERO = ["paisa", "pollo con champiñones"];
+
+function opcionesPromo(seleccionado, esPrimero = true) {
+  return SABORES_PROMOCION
+    .filter(s => esPrimero || !SABORES_SOLO_PRIMERO.includes(s.toLowerCase()))
+    .map(s =>
+      `<option value="${s}" ${s === seleccionado ? "selected" : ""}>${s}</option>`
+    ).join("");
 }
 
 function togglePromoSabores(checkbox) {
@@ -101,12 +106,14 @@ function togglePromoSabores(checkbox) {
   const wrapper = item.querySelector('.promo-sabores-wrapper');
   const sel1 = item.querySelector('.promo-sabor-1');
   const sel2 = item.querySelector('.promo-sabor-2');
+  const sel3 = item.querySelector('.promo-sabor-3');
   if (!wrapper) return;
 
   if (checkbox.checked) {
     wrapper.style.display = "block";
-    if (sel1 && !sel1.innerHTML) sel1.innerHTML = opcionesPromo(SABORES_PROMOCION[0]);
-    if (sel2 && !sel2.innerHTML) sel2.innerHTML = opcionesPromo(SABORES_PROMOCION[1]);
+    if (sel1 && !sel1.innerHTML) sel1.innerHTML = opcionesPromo(SABORES_PROMOCION[0], true);
+    if (sel2 && !sel2.innerHTML) sel2.innerHTML = opcionesPromo(SABORES_PROMOCION[1], false);
+    if (sel3 && !sel3.innerHTML) sel3.innerHTML = opcionesPromo(SABORES_PROMOCION[2], false);
   } else {
     wrapper.style.display = "none";
   }
@@ -580,6 +587,11 @@ if (telefonoInput) {
           const lechP2 = itemDiv.querySelector(".lecherita-promo-2")?.checked;
           lineaExtra += `   1) ${promoSabor1.value}${lechP1 ? " 🥛 Lecherita: Sí" : ""}\n`;
           lineaExtra += `   2) ${promoSabor2.value}${lechP2 ? " 🥛 Lecherita: Sí" : ""}\n`;
+          const promoSabor3 = itemDiv.querySelector(".promo-sabor-3");
+          if (promoSabor3) {
+            const lechP3 = itemDiv.querySelector(".lecherita-promo-3")?.checked;
+            lineaExtra += `   3) ${promoSabor3.value}${lechP3 ? " 🥛 Lecherita: Sí" : ""}\n`;
+          }
         } else if (selectTamano) {
           precio = parseInt(selectTamano.selectedOptions[0]?.dataset.precio) || 0;
           nombreProducto += ` (${selectTamano.value})`;
